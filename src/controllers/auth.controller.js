@@ -1,0 +1,71 @@
+const authService = require(
+    "../services/auth.service"
+);
+
+const response = require(
+    "../utils/response"
+);
+
+const login = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        const { email, senha } = req.body;
+
+        const resultado =
+            await authService.login(
+                email,
+                senha
+            );
+
+        return response.success(
+            res,
+            "Login realizado com sucesso.",
+            resultado
+        );
+
+    } catch (error) {
+        next(error);
+    }
+
+};
+
+const esqueciSenha = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        
+        await authService.esqueciSenha(email);
+
+        return response.success(
+            res,
+            "Se o e-mail estiver cadastrado, um código de recuperação será enviado."
+        );
+    } catch (error) {
+        next(error);
+    }
+};
+
+const redefinirSenha = async (req, res, next) => {
+    try {
+        const { email, codigo, nova_senha } = req.body;
+        
+        await authService.redefinirSenha(email, codigo, nova_senha);
+
+        return response.success(
+            res,
+            "Senha redefinida com sucesso. Você já pode fazer login com a nova senha."
+        );
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = {
+    login,
+    esqueciSenha,
+    redefinirSenha
+};

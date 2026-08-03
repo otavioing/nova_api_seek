@@ -1,0 +1,1041 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Scratch Pad
+meta:
+  id: wrk_18af048671ab4a76b032d8ca804db43d
+  created: 1785791299267
+  modified: 1785791299267
+  description: ""
+collection:
+  - name: seek
+    meta:
+      id: fld_dafcc5fb2ed9476f817b109d016a2f2e
+      created: 1781378165143
+      modified: 1781378165143
+      sortKey: -1781378165143
+      description: ""
+    children:
+      - url: http://localhost:4500/usuarios
+        name: Cria um novo usuário
+        meta:
+          id: req_ec3a23d10e3e47798e7a909ee6787fb1
+          created: 1774871076107
+          modified: 1785790275272
+          isPrivate: false
+          description: ""
+          sortKey: -1781378185523
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "tipo_usuario": "PF",
+                "nome": "Otávio Domingues 2",
+                "email": "otaviodominguessilva@gmail.com",
+                "senha": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/auth/login
+        name: Faz o login de usuário
+        meta:
+          id: req_cfefedcd4bf94082ac3be0a20de3d9b0
+          created: 1781378199948
+          modified: 1785789400178
+          isPrivate: false
+          description: ""
+          sortKey: -1781378199949
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "email": "otaviodominguessilva@gmail.com",
+            	    "senha": "Otavio2of"
+
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.6.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/usuarios/verificar-primeiro-login
+        name: Verifica se o usuário logado é o primeiro login e se precisa completar o
+          cadastro
+        meta:
+          id: req_4cabf8a1576f4eacbe837cde9381cd69
+          created: 1781449002808
+          modified: 1785790313539
+          isPrivate: false
+          description: ""
+          sortKey: -1781449002808
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.6.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: Bearer
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODE0NDkwNzYsImV4cCI6MTc4MjA1Mzg3Nn0.A5CvaKwhY9XGY1DozRqDGtGJC7dBwHgqqpVhcZN-gxY
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/usuarios/completar-cadastro
+        name: Completa o cadastro do usuário logado no banco
+        meta:
+          id: req_2bf8da24849f42b38371a2cb611b3964
+          created: 1781449256915
+          modified: 1785790350045
+          isPrivate: false
+          description: ""
+          sortKey: -1781449066334.75
+        method: PATCH
+        headers:
+          - name: User-Agent
+            value: insomnia/12.6.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: Bearer
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODE0NDkwNzYsImV4cCI6MTc4MjA1Mzg3Nn0.A5CvaKwhY9XGY1DozRqDGtGJC7dBwHgqqpVhcZN-gxY
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/usuarios/verificar-codigo
+        name: Verifica se o código de verificação enviado por email é válido e ativa a
+          conta do usuário
+        meta:
+          id: req_878c3ac1ac614fe7a6e1b67777aeef6b
+          created: 1785532467320
+          modified: 1785790287533
+          isPrivate: false
+          description: ""
+          sortKey: -1781378192736
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "otaviodominguessilva@gmail.com",
+            	"codigo": "312817"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/usuarios/reenviar-codigo
+        name: " Reenvia o código de verificação para o email do usuário"
+        meta:
+          id: req_86090013bbb842809ddc936d68788ee9
+          created: 1785532973094
+          modified: 1785790297872
+          isPrivate: false
+          description: ""
+          sortKey: -1781378196342.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "otaviodominguessilva@gmail.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/auth/esqueci-senha
+        name: Envia um código de recuperação para o email do usuário
+        meta:
+          id: req_d5e0bcff53f1475fb74bb02dcf1dc5ee
+          created: 1785757497255
+          modified: 1785789410412
+          isPrivate: false
+          description: ""
+          sortKey: -1781449129861.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "otaviodominguessilva@gmail.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/auth/redefinir-senha
+        name: Redefine a senha do usuário usando o código de recuperação enviado por
+          email
+        meta:
+          id: req_759bb302f7fe4af98142449a81e81ce3
+          created: 1785757499689
+          modified: 1785789425329
+          isPrivate: false
+          description: ""
+          sortKey: -1781449193388.25
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "otaviodominguessilva@gmail.com",
+            	"codigo": "724995",
+            	"nova_senha": "Otavio2of"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - name: Notificações
+        meta:
+          id: fld_c4efdd51a7584cad9b0083a43598f46d
+          created: 1784572311955
+          modified: 1784572311955
+          sortKey: -1784572311955
+          description: ""
+        children:
+          - url: http://localhost:4500/notificacoes
+            name: Lista todas as notificações do usuário logado
+            meta:
+              id: req_47de0c1588b94b298d74ea0855ac26e5
+              created: 1784571711645
+              modified: 1785789485198
+              isPrivate: false
+              description: ""
+              sortKey: -1784572321273
+            method: GET
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvdGF2aW8yQGdtYWlsLmNvbSIsInRpcG9fdXN1YXJpbyI6IlBGIiwiaWF0IjoxNzg0NTcxNzc5LCJleHAiOjE3ODUxNzY1Nzl9.R-jssJCXiQmD62Q2jp7B_skmtl-KxVJlAtRbKCI19gQ
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/notificacoes
+            name: Limpa todas as notificações do usuário logado
+            meta:
+              id: req_a057d1d6848b47538b18a5ef4da8d07d
+              created: 1784571712382
+              modified: 1785789493460
+              isPrivate: false
+              description: ""
+              sortKey: -1784572321173
+            method: DELETE
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvdGF2aW8yQGdtYWlsLmNvbSIsInRpcG9fdXN1YXJpbyI6IlBGIiwiaWF0IjoxNzg0NTcxNzc5LCJleHAiOjE3ODUxNzY1Nzl9.R-jssJCXiQmD62Q2jp7B_skmtl-KxVJlAtRbKCI19gQ
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/notificacoes/1
+            name: Exclui uma notificação específica
+            meta:
+              id: req_635b7380d2cb4e3daa1032a7c21bf4a6
+              created: 1784571712976
+              modified: 1785789514120
+              isPrivate: false
+              description: ""
+              sortKey: -1784572321073
+            method: DELETE
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvdGF2aW8yQGdtYWlsLmNvbSIsInRpcG9fdXN1YXJpbyI6IlBGIiwiaWF0IjoxNzg0NTcxNzc5LCJleHAiOjE3ODUxNzY1Nzl9.R-jssJCXiQmD62Q2jp7B_skmtl-KxVJlAtRbKCI19gQ
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/notificacoes/2/lida
+            name: Marca uma notificação como lida
+            meta:
+              id: req_4f0d582157f34ecc8661d16289667fe0
+              created: 1784571713541
+              modified: 1785789507157
+              isPrivate: false
+              description: ""
+              sortKey: -1784572320973
+            method: PATCH
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvdGF2aW8yQGdtYWlsLmNvbSIsInRpcG9fdXN1YXJpbyI6IlBGIiwiaWF0IjoxNzg0NTcxNzc5LCJleHAiOjE3ODUxNzY1Nzl9.R-jssJCXiQmD62Q2jp7B_skmtl-KxVJlAtRbKCI19gQ
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: seguidores
+        meta:
+          id: fld_5356ccd9ddbb493db81218c364085f6c
+          created: 1784572403544
+          modified: 1784572403544
+          sortKey: -1784572403544
+          description: ""
+        children:
+          - url: http://localhost:4500/seguidores/status/1
+            name: Verifica o status de seguimento entre o usuário logado e outro usuário
+              específico
+            meta:
+              id: req_22459d3e2cb849b9b70807ac5dcead68
+              created: 1784569946867
+              modified: 1785790127905
+              isPrivate: false
+              description: ""
+              sortKey: -1784572407172
+            method: GET
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/seguidores/2
+            name: Segue um usuário específico
+            meta:
+              id: req_09dedaca60fe41fd937feae00e328384
+              created: 1784569948418
+              modified: 1785790009614
+              isPrivate: false
+              description: ""
+              sortKey: -1784572407572
+            method: POST
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/seguidores/2
+            name: Deixa de seguir um usuário específico
+            meta:
+              id: req_da58352f135545b08bb467d284a62408
+              created: 1784569949010
+              modified: 1785790027215
+              isPrivate: false
+              description: ""
+              sortKey: -1784572407472
+            method: DELETE
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/seguidores/seguidores/2
+            name: Lista os seguidores de um usuário específico
+            meta:
+              id: req_70ffc576f23a43268ff9b9d47c3088c5
+              created: 1784569949880
+              modified: 1785790109065
+              isPrivate: false
+              description: ""
+              sortKey: -1784572407372
+            method: GET
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/seguidores/seguindo/1
+            name: Lista os usuários que um usuário específico está seguindo
+            meta:
+              id: req_28dd852cea34421fa77df84ce09f9eb1
+              created: 1784569950561
+              modified: 1785790104153
+              isPrivate: false
+              description: ""
+              sortKey: -1784572407272
+            method: GET
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Comentarios
+        meta:
+          id: fld_d82d03b01f9e4aa89ddcc04257d99e66
+          created: 1784572431231
+          modified: 1784572431231
+          sortKey: -1784572431231
+          description: ""
+        children:
+          - url: http://localhost:4500/posts/comentarios/1/respostas
+            name: Cria uma resposta a um comentário
+            meta:
+              id: req_6af71e64c659436b844145a359bc7497
+              created: 1784140805286
+              modified: 1785789832898
+              isPrivate: false
+              description: ""
+              sortKey: -1784572433869
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"resposta": "primeira resposta"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts/3/comentarios
+            name: Cria um comentário em um post
+            meta:
+              id: req_b81679df48f548719e4492b254fb3489
+              created: 1784140807957
+              modified: 1785789803174
+              isPrivate: false
+              description: ""
+              sortKey: -1784572433969
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"comentario": "primeiro comentario"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: Authorization
+                value: Bepair_ec4aae5ccb054bf694682cc4659d8265arer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts/comentarios/1/respostas
+            name: Lista as respostas de um comentário
+            meta:
+              id: req_545c0121c8ab4f23beb5028cd0df2bc0
+              created: 1784489880043
+              modified: 1785789862526
+              isPrivate: false
+              description: ""
+              sortKey: -1784572433769
+            method: GET
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: salvos
+        meta:
+          id: fld_0b3440aa73774e0a83f010df252adfd4
+          created: 1784664269301
+          modified: 1784664269301
+          sortKey: -1784664269301
+          description: ""
+        children:
+          - url: http://localhost:4500/posts/3/salvar
+            name: Salva um post
+            meta:
+              id: req_2b6e0f196de24f5b8563987dbd0abbe4
+              created: 1784140259141
+              modified: 1785789739157
+              isPrivate: false
+              description: ""
+              sortKey: -1784664287514
+            method: POST
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts/3/salvar
+            name: Remove um post salvo
+            meta:
+              id: req_067e25bd6b884013b79ab32982e70cd8
+              created: 1784140259708
+              modified: 1785789746719
+              isPrivate: false
+              description: ""
+              sortKey: -1784664287414
+            method: DELETE
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts/salvos
+            name: Lista os posts salvos pelo usuário
+            meta:
+              id: req_0d7bcc2b5da840518f1b49abeb6a7734
+              created: 1784664307090
+              modified: 1785789757335
+              isPrivate: false
+              description: ""
+              sortKey: -1784664307090
+            method: GET
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Curtidos
+        meta:
+          id: fld_d50d94e7e5b1498ca65970f1cffbd0c6
+          created: 1784664280987
+          modified: 1784664280987
+          sortKey: -1784664280987
+          description: ""
+        children:
+          - url: http://localhost:4500/posts/3/like
+            name: Adiciona um like a um post
+            meta:
+              id: req_ed864014f07a4078b8506cc57041e8a1
+              created: 1784140251690
+              modified: 1785789626104
+              isPrivate: false
+              description: ""
+              sortKey: -1784664294415
+            method: POST
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts/3/like
+            name: Remove um like de um post
+            meta:
+              id: req_0b199b5f9a634cd68240ba02da9f10d4
+              created: 1784140257978
+              modified: 1785789665517
+              isPrivate: false
+              description: ""
+              sortKey: -1784664294315
+            method: DELETE
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts/curtidos
+            name: Lista os posts curtidos pelo usuário
+            meta:
+              id: req_804e680e4f484b489eed336ae4c35b14
+              created: 1784664304711
+              modified: 1785789706080
+              isPrivate: false
+              description: ""
+              sortKey: -1784664304711
+            method: GET
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Preferencias notificações
+        meta:
+          id: fld_d76351238b4b4a42964dbccd38977aaa
+          created: 1785446955527
+          modified: 1785789962396
+          sortKey: -1785446955527
+          description: ""
+        children:
+          - url: http://localhost:4500/preferencias-notificacoes
+            name: Atualiza as preferências de notificações do usuário logado
+            meta:
+              id: req_4f98689c1bc94a8b8ab6875dd39a9467
+              created: 1785446958829
+              modified: 1785789948048
+              isPrivate: false
+              description: ""
+              sortKey: -1785446958829
+            method: PUT
+            body:
+              mimeType: application/json
+              text: |2-
+                 {
+                	 "preferencias": { "email_login": false}
+                 }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJvdGF2aW9kb21pbmd1ZXNzaWx2YUBnbWFpbC5jb20iLCJ0aXBvX3VzdWFyaW8iOiJQRiIsImlhdCI6MTc4NTQ0NzQ0NSwiZXhwIjoxNzg2MDUyMjQ1fQ.8LlRTPxX-IwYnaTVh_7149nuO5awiIH4GiuJPu1JHLU
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/preferencias-notificacoes
+            name: Obtém as preferências de notificações do usuário logado
+            meta:
+              id: req_88fe00cc878f483cb21965f75e2c0b52
+              created: 1785446962062
+              modified: 1785789938560
+              isPrivate: false
+              description: ""
+              sortKey: -1785446962062
+            method: GET
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvdGF2aW8yQGdtYWlsLmNvbSIsInRpcG9fdXN1YXJpbyI6IlBGIiwiaWF0IjoxNzg1NDQzODk4LCJleHAiOjE3ODYwNDg2OTh9.1AlAyuOB5dkS8fPbXFJlIdVLH-mTlq0tFw-P6HeGpsg
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Posts
+        meta:
+          id: fld_01c47b418206481e99248715b7047988
+          created: 1785756480703
+          modified: 1785756486518
+          sortKey: -1783019460571.5
+          description: ""
+        children:
+          - url: http://localhost:4500/posts
+            name: Cria um novo post
+            meta:
+              id: req_ecfe9b6faec04671b2eca07216cde637
+              created: 1781465521520
+              modified: 1785789572476
+              isPrivate: false
+              description: ""
+              sortKey: -1785756490884
+            method: POST
+            body:
+              mimeType: multipart/form-data
+              params:
+                - name: titulo
+                  value: "Titulo primeiro post da api nova "
+                  description: ""
+                  disabled: false
+                - name: descricao
+                  value: "Descrição primeiro post da api nova "
+                  description: ""
+                  disabled: false
+                - name: categorias
+                  value: '["Foto", "Desenho"]'
+                  description: ""
+                  disabled: false
+                - name: imagens
+                  value: ""
+                  description: ""
+                  disabled: false
+                  fileName: C:\Users\conta\Pictures\Screenshots\Captura de tela 2025-11-10
+                    183556.png
+                  type: file
+                - name: capa
+                  value: ""
+                  description: ""
+                  disabled: false
+                  fileName: C:\Users\conta\Downloads\algarismo_2_numeral_125mm_ouro_escovado_200_2_1570509052_f1ba_600x600.jpg
+                  type: file
+                - name: imagens
+                  value: ""
+                  description: ""
+                  disabled: false
+                  fileName: C:\Users\conta\Pictures\Screenshots\Captura de tela 2025-11-10
+                    183813.png
+                  type: file
+            headers:
+              - name: Content-Type
+                value: multipart/form-data
+              - name: User-Agent
+                value: insomnia/12.6.0
+                description: ""
+                disabled: false
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODQxMzk3NzksImV4cCI6MTc4NDc0NDU3OX0.6SuPbqd7GFeyU7stDESleSLiysF0xldLEBZfIdH6jdM
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts/3
+            name: Obtém um post por ID
+            meta:
+              id: req_51601ab50901423d98c0e14bcd96590a
+              created: 1781466609188
+              modified: 1785789894339
+              isPrivate: false
+              description: ""
+              sortKey: -1785756490984
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.6.0
+                description: ""
+                disabled: false
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvdGF2aW8yQGdtYWlsLmNvbSIsInRpcG9fdXN1YXJpbyI6IlBGIiwiaWF0IjoxNzg1NDQzODk4LCJleHAiOjE3ODYwNDg2OTh9.1AlAyuOB5dkS8fPbXFJlIdVLH-mTlq0tFw-P6HeGpsg
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Mensagens
+        meta:
+          id: fld_474f8f98f6994cef9ab455bec6d4c57b
+          created: 1785788419297
+          modified: 1785788419297
+          sortKey: -1785788419297
+          description: ""
+        children:
+          - url: http://localhost:4500/mensagens/conversas
+            name: Inicia uma nova conversa ou retorna uma existente
+            meta:
+              id: req_bed10b78904c44ebbfe363947fbb0c94
+              created: 1785788422206
+              modified: 1785789156069
+              isPrivate: false
+              description: ""
+              sortKey: -1785788422206
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_destinatario": "1"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJvdGF2aW9kb21pbmd1ZXNzaWx2YUBnbWFpbC5jb20iLCJ0aXBvX3VzdWFyaW8iOiJQRiIsImlhdCI6MTc4NTc4ODYzMSwiZXhwIjoxNzg2MzkzNDMxfQ.W3fvImrVaXLOu9H8xxmFeNEu4hEqh_JBRom4JFjoH7w
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/mensagens/conversas
+            name: Lista as conversas ativas do usuário logado
+            meta:
+              id: req_9e73e7bd60084de8bd178e4e21ed2918
+              created: 1785788425790
+              modified: 1785789166463
+              isPrivate: false
+              description: ""
+              sortKey: -1785788425790
+            method: GET
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJvdGF2aW9kb21pbmd1ZXNzaWx2YUBnbWFpbC5jb20iLCJ0aXBvX3VzdWFyaW8iOiJQRiIsImlhdCI6MTc4NTc4ODYzMSwiZXhwIjoxNzg2MzkzNDMxfQ.W3fvImrVaXLOu9H8xxmFeNEu4hEqh_JBRom4JFjoH7w
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/mensagens/conversas/1/mensagens
+            name: Envia uma mensagem para uma conversa específica
+            meta:
+              id: req_54ea79a32e4e41a2b596f34db6dca34f
+              created: 1785788427823
+              modified: 1785789250494
+              isPrivate: false
+              description: ""
+              sortKey: -1785788427823
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"mensagem": "Primeira mensagem da nova api"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJvdGF2aW9kb21pbmd1ZXNzaWx2YUBnbWFpbC5jb20iLCJ0aXBvX3VzdWFyaW8iOiJQRiIsImlhdCI6MTc4NTc4ODYzMSwiZXhwIjoxNzg2MzkzNDMxfQ.W3fvImrVaXLOu9H8xxmFeNEu4hEqh_JBRom4JFjoH7w
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/mensagens/conversas/1/mensagens
+            name: Lista o histórico de mensagens de uma conversa específica
+            meta:
+              id: req_d2d52a0675874d358103dd3bb31b97cd
+              created: 1785788430038
+              modified: 1785789253154
+              isPrivate: false
+              description: ""
+              sortKey: -1785788430038
+            method: GET
+            headers:
+              - name: Authorization
+                value: Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJvdGF2aW9kb21pbmd1ZXNzaWx2YUBnbWFpbC5jb20iLCJ0aXBvX3VzdWFyaW8iOiJQRiIsImlhdCI6MTc4NTc4ODYzMSwiZXhwIjoxNzg2MzkzNDMxfQ.W3fvImrVaXLOu9H8xxmFeNEu4hEqh_JBRom4JFjoH7w
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_8a236989a14e4182ae145feaac27964f
+    created: 1763412840212
+    modified: 1763412840212
+environments:
+  name: Base Environment
+  meta:
+    id: env_c4415d91ac6a4a589924b0d6a585d88e
+    created: 1763412840209
+    modified: 1763412840209
+    isPrivate: false
