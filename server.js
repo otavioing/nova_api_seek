@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
+const cors = require("cors");
 
 const usuarioRoutes = require("./src/routes/usuarios.routes");
 const postRoutes = require("./src/routes/post.routes");
@@ -16,8 +17,10 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
-app.use("/uploads",express.static(path.join(__dirname, "uploads")));
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/usuarios", usuarioRoutes);
 app.use("/posts", postRoutes);
@@ -37,4 +40,3 @@ app.listen(
         );
     }
 );
-
