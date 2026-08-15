@@ -93,6 +93,22 @@ const getById = async (
     };
 };
 
+const getAll = async () => {
+
+    const posts =
+        await postRepository.findAll();
+
+    for (const post of posts) {
+
+        post.imagens =
+            await postRepository.getImagens(
+                post.id
+            );
+    }
+
+    return posts;
+};
+
 const like = async (
     postId,
     usuarioId
@@ -271,6 +287,7 @@ const getCommentReplies = async (
 module.exports = {
     create,
     getById,
+    getAll,
     like,
     removeLike,
     getCurtidos,

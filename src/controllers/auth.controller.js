@@ -10,6 +10,9 @@ const authRepository = require(
     "../repositories/auth.repository"
 );
 
+const { montarUrlArquivo } = require("../utils/fileUrl");
+
+
 const login = async (
     req,
     res,
@@ -77,6 +80,16 @@ const me = async (req, res, next) => {
                 message: "Usuário não encontrado."
             });
         }
+
+        usuario.foto_perfil = montarUrlArquivo(
+            req,
+            usuario.foto_perfil,
+            usuario.banner_perfil
+        );
+        usuario.banner_perfil = montarUrlArquivo(
+            req,
+            usuario.banner_perfil
+        );
 
         return response.success(
             res,

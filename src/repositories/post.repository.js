@@ -1,5 +1,46 @@
 const banco = require("../config/database");
 
+const findAll = async () => {
+
+    const [rows] = await banco.query(
+        `
+        SELECT
+            p.id,
+            p.titulo,
+            p.descricao,
+            p.capa,
+            p.data_criacao,
+
+            u.id AS usuario_id,
+            u.nome,
+            u.foto_perfil,
+
+            (
+                SELECT COUNT(*)
+                FROM likes_posts lp
+                WHERE lp.id_post = p.id
+            ) AS likes,
+
+            (
+                SELECT COUNT(*)
+                FROM posts_salvos ps
+                WHERE ps.id_post = p.id
+            ) AS salvos
+
+        FROM posts p
+
+        INNER JOIN usuarios u
+            ON u.id = p.id_usuario
+
+        WHERE p.status = 'ATIVO'
+
+        ORDER BY p.data_criacao DESC
+        `
+    );
+
+    return rows;
+};
+
 const findById = async (postId) => {
 
     const [rows] = await banco.query(
@@ -444,6 +485,7 @@ const findSalvosByUsuario = async (usuarioId) => {
 
 
 module.exports = {
+    findAll,
     findById,
     create,
     addCategorias,

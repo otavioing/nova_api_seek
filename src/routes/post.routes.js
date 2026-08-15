@@ -36,6 +36,8 @@ router.post("/:id/comentarios",authMiddleware,validarCriacaoComentario,postContr
 router.post("/comentarios/:id/respostas",authMiddleware,validarCriacaoResposta,postController.replyComment);
 //Lista as respostas de um comentário
 router.get("/comentarios/:id/respostas",authMiddleware,postController.getCommentReplies);
+//Obtém todos os posts
+router.get("/", authMiddleware, postController.getAll);
 //Obtém um post por ID
 router.get("/:id",authMiddleware,postController.getById);
 

@@ -148,6 +148,158 @@ const getById = async (
     }
 };
 
+const getAll = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        const posts =
+            await postService.getAll();
+
+        const agora = new Date();
+
+        const postsFormatados =
+            posts.map(post => {
+
+                const dataPostagem =
+                    new Date(
+                        post.data_criacao
+                    );
+
+                const diferenca =
+                    agora - dataPostagem;
+
+                const segundos =
+                    Math.floor(
+                        diferenca / 1000
+                    );
+
+                const minutos =
+                    Math.floor(
+                        segundos / 60
+                    );
+
+                const horas =
+                    Math.floor(
+                        minutos / 60
+                    );
+
+                const dias =
+                    Math.floor(
+                        horas / 24
+                    );
+
+                let tempoAtras;
+
+                if (segundos < 60) {
+
+                    tempoAtras =
+                        "Agora";
+
+                } else if (minutos < 60) {
+
+                    tempoAtras =
+                        `${minutos} ${
+                            minutos === 1
+                                ? "minuto"
+                                : "minutos"
+                        } atrás`;
+
+                } else if (horas < 24) {
+
+                    tempoAtras =
+                        `${horas} ${
+                            horas === 1
+                                ? "hora"
+                                : "horas"
+                        } atrás`;
+
+                } else if (dias < 30) {
+
+                    tempoAtras =
+                        `${dias} ${
+                            dias === 1
+                                ? "dia"
+                                : "dias"
+                        } atrás`;
+
+                } else {
+
+                    tempoAtras =
+                        dataPostagem.toLocaleDateString(
+                            "pt-BR"
+                        );
+                }
+
+                return {
+
+                    id: post.id,
+
+                    titulo:
+                        post.titulo,
+
+                    descricao:
+                        post.descricao,
+
+                    capa:
+                        montarUrlArquivo(
+                            req,
+                            post.capa
+                        ),
+
+                    imagens:
+                        post.imagens.map(
+                            imagem =>
+                                montarUrlArquivo(
+                                    req,
+                                    imagem.caminho_imagem
+                                )
+                        ),
+
+                    criador: {
+                        id:
+                            post.usuario_id,
+
+                        nome:
+                            post.nome,
+
+                        foto_perfil:
+                            montarUrlArquivo(
+                                req,
+                                post.foto_perfil
+                            )
+                    },
+
+                    data_postagem:
+                        post.data_criacao,
+
+                    tempo_atras:
+                        tempoAtras,
+
+                    likes:
+                        post.likes,
+
+                    salvos:
+                        post.salvos
+                };
+            });
+
+        return response.success(
+            res,
+            "Posts encontrados com sucesso.",
+            postsFormatados,
+            postsFormatados.length
+        );
+
+    } catch (error) {
+
+        next(error);
+    }
+};
+
 const like = async (
     req,
     res,
@@ -465,6 +617,7 @@ const getCommentReplies = async (
 module.exports = {
     create,
     getById,
+    getAll,
     like,
     removeLike,
     getCurtidos,
