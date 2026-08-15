@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const usuarioRoutes = require("./src/routes/usuarios.routes");
 const postRoutes = require("./src/routes/post.routes");
@@ -17,8 +18,14 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: "http://127.0.0.1:5500",
+    credentials: true
+}));
+
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

@@ -24,6 +24,29 @@ const findByEmail = async (email) => {
 
     return rows[0] || null;
 };
+const findById = async (id) => {
+
+    const [rows] = await db.query(
+        `
+        SELECT
+            id,
+            tipo_usuario,
+            nome,
+            email,
+            foto_perfil,
+            banner_perfil,
+            cnpj,
+            conta_verificada,
+            banido
+        FROM usuarios
+        WHERE id = ?
+        LIMIT 1
+        `,
+        [id]
+    );
+
+    return rows[0] || null;
+};
 
 const updateSenha = async (idUsuario, novaSenhaHash) => {
     const query = `
@@ -37,5 +60,6 @@ const updateSenha = async (idUsuario, novaSenhaHash) => {
 
 module.exports = {
     findByEmail,
+    findById,
     updateSenha
 };

@@ -10,30 +10,14 @@ const auth = async (
 
     try {
 
-        const authHeader =
-            req.headers.authorization;
+        const token = req.cookies.token;
 
-        if (!authHeader) {
+        if (!token) {
             throw new AppError(
                 "Token não informado.",
                 401
             );
         }
-
-        const parts =
-            authHeader.split(" ");
-
-        if (
-            parts.length !== 2 ||
-            parts[0] !== "Bearer"
-        ) {
-            throw new AppError(
-                "Token mal formatado.",
-                401
-            );
-        }
-
-        const token = parts[1];
 
         const decoded = jwt.verify(
             token,

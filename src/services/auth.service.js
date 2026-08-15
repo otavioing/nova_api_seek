@@ -32,13 +32,6 @@ const login = async (email, senha) => {
         );
     }
 
-    if (!senhaValida) {
-        throw new AppError(
-            "Email ou senha inválidos.",
-            401
-        );
-    }
-
     if (usuario.banido === 1) {
         throw new AppError(
             "Acesso negado. Sua conta foi banida por violar os termos de uso da plataforma.",
@@ -72,9 +65,9 @@ const login = async (email, senha) => {
         const preferencias = await preferenciasService.getPreferencias(usuario.id);
 
         if (preferencias.email_login === true) {
-            
-            const dataHora = new Date().toLocaleString("pt-BR", { 
-                timeZone: "America/Sao_Paulo" 
+
+            const dataHora = new Date().toLocaleString("pt-BR", {
+                timeZone: "America/Sao_Paulo"
             });
 
             await sendEmail({
@@ -103,7 +96,7 @@ const login = async (email, senha) => {
 const esqueciSenha = async (email) => {
     const usuario = await usuarioRepository.findByEmail(email);
 
-    if (!usuario) return; 
+    if (!usuario) return;
 
     const codigoRecuperacao = Math.floor(100000 + Math.random() * 900000).toString();
     const expiracao = new Date(Date.now() + 15 * 60 * 1000);
@@ -128,7 +121,7 @@ const esqueciSenha = async (email) => {
         console.error("Erro ao enviar e-mail de recuperação de senha:", error);
         throw new AppError("Erro interno ao enviar o e-mail. Tente novamente mais tarde.", 500);
     }
-}; 
+};
 
 const redefinirSenha = async (email, codigo, nova_senha) => {
     const usuario = await usuarioRepository.findByEmail(email);
