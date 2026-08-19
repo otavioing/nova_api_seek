@@ -104,6 +104,20 @@ const me = async (req, res, next) => {
     }
 };
 
+const idUsuario = async (req, res, next) => {
+    try {
+        return response.success(
+            res,
+            "ID do usuário autenticado carregado com sucesso.",
+            {
+                id: req.user.id
+            }
+        );
+    } catch (error) {
+        next(error);
+    }
+};
+
 const esqueciSenha = async (req, res, next) => {
     try {
         const { email } = req.body;
@@ -138,6 +152,7 @@ module.exports = {
     login,
     logout,
     me,
+    idUsuario,
     esqueciSenha,
     redefinirSenha
 };

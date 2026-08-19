@@ -36,6 +36,14 @@ const obterOuCriarCategorias = async (
     return ids;
 };
 
+const getCategoriasPopulares = async () => {
+    
+    const categorias = await categoriaRepository.findMaisUsadas();
+    
+    return categorias;
+};
+
 module.exports = {
-    obterOuCriarCategorias
+    obterOuCriarCategorias,
+    getCategoriasPopulares
 };

@@ -163,6 +163,45 @@ const completarCadastro = async (idUsuario) => {
     return;
 };
 
+const getPaginaUsuario = async (
+    idUsuario,
+    idUsuarioToken = null
+) => {
+
+    const usuario =
+        await usuarioRepository.findPaginaById(
+            idUsuario
+        );
+
+    if (!usuario) {
+        throw new AppError(
+            "Usuário não encontrado.",
+            404
+        );
+    }
+
+    return {
+        nome:
+            usuario.nome,
+        descricao:
+            usuario.descricao,
+        foto:
+            usuario.foto_perfil,
+        banner:
+            usuario.banner_perfil,
+        tipo_usuario:
+            usuario.tipo_usuario,
+        total_seguidores:
+            usuario.total_seguidores,
+        total_seguindo:
+            usuario.total_seguindo,
+        total_posts:
+            usuario.total_posts,
+        edit:
+            Number(idUsuarioToken) === Number(idUsuario)
+    };
+};
+
 const updateFotoPerfil = async (
     usuarioId,
     caminho
@@ -192,6 +231,7 @@ module.exports = {
     reenviarCodigo,
     verificarPrimeiroLogin,
     completarCadastro,
+    getPaginaUsuario,
     updateFotoPerfil,
     updateBannerPerfil
 };

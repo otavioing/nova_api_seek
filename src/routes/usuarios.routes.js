@@ -16,6 +16,8 @@ router.post("/reenviar-codigo",usuarioValidator.reenviarCodigo,usuarioController
 router.get("/verificar-primeiro-login", authMiddleware, usuarioController.verificarPrimeiroLogin);
 // Completa o cadastro do usuário logado
 router.patch("/completar-cadastro", authMiddleware, usuarioController.completarCadastro);
+// Carrega a página pública de um usuário
+router.get("/:id", usuarioController.getPaginaUsuario);
 // Atualiza a foto de perfil do usuário logado
 router.put("/:id/foto-perfil",authMiddleware,uploadPerfil.single("foto"),usuarioController.uploadFotoPerfil);
 // Atualiza o banner de perfil do usuário logado

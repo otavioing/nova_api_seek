@@ -2,9 +2,15 @@ const usuarioService = require(
     "../services/usuario.service"
 );
 
+const jwt = require("jsonwebtoken");
+
 const response = require(
     "../utils/response"
 );
+
+const {
+    montarUrlArquivo
+} = require("../utils/fileUrl");
 
 const create = async (
     req,
@@ -111,6 +117,59 @@ const completarCadastro = async (
 
 };
 
+const getPaginaUsuario = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        const { id } = req.params;
+        let idUsuarioToken = null;
+
+        if (req.cookies?.token) {
+            try {
+                const decoded = jwt.verify(
+                    req.cookies.token,
+                    process.env.JWT_SECRET
+                );
+
+                idUsuarioToken = decoded.id;
+            } catch (error) {
+                idUsuarioToken = null;
+            }
+        }
+
+        const usuario =
+            await usuarioService.getPaginaUsuario(
+                id,
+                idUsuarioToken
+            );
+
+        usuario.foto =
+            montarUrlArquivo(
+                req,
+                usuario.foto
+            );
+
+        usuario.banner =
+            montarUrlArquivo(
+                req,
+                usuario.banner
+            );
+
+        return response.success(
+            res,
+            "Página do usuário carregada com sucesso.",
+            usuario
+        );
+
+    } catch (error) {
+        next(error);
+    }
+};
+
 const uploadFotoPerfil = async (
     req,
     res,
@@ -191,6 +250,7 @@ module.exports = {
     reenviarCodigo,
     verificarPrimeiroLogin,
     completarCadastro,
+    getPaginaUsuario,
     uploadFotoPerfil,
     uploadBannerPerfil
 };

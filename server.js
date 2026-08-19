@@ -5,6 +5,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const usuarioRoutes = require("./src/routes/usuarios.routes");
+const categoriaRoutes = require("./src/routes/categoriaPost.routes");
 const postRoutes = require("./src/routes/post.routes");
 const authRoutes = require("./src/routes/auth.routes");
 const seguidoresRoutes = require("./src/routes/seguidores.routes");
@@ -30,6 +31,7 @@ app.use(cookieParser());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/usuarios", usuarioRoutes);
+app.use("/categorias", categoriaRoutes);
 app.use("/posts", postRoutes);
 app.use("/auth", authRoutes);
 app.use("/seguidores", seguidoresRoutes);

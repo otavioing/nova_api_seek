@@ -2,6 +2,10 @@ const postRepository = require(
     "../repositories/post.repository"
 );
 
+const AppError = require(
+    "../utils/AppError"
+);
+
 const categoriaPostService = require(
     "./categoriaPost.service"
 );
@@ -283,6 +287,66 @@ const getCommentReplies = async (
     );
 };
 
+const findByCategoria = async (idCategoria) => {
+    const posts = await postRepository.findByCategoria(idCategoria);
+    
+    if (!posts || posts.length === 0) {
+        throw new AppError("Nenhum post encontrado para esta categoria.", 404);
+    }
+
+    for (const post of posts) {
+
+        post.imagens =
+            await postRepository.getImagens(
+                post.id
+            );
+    }
+
+    return posts;
+};
+
+const findByUsuarioId = async (usuarioId) => {
+    const posts = await postRepository.findByUsuarioId(usuarioId);
+
+    for (const post of posts) {
+
+        post.imagens =
+            await postRepository.getImagens(
+                post.id
+            );
+    }
+
+    return posts;
+};
+
+const removePost = async (
+    postId,
+    usuarioId
+) => {
+
+    const post =
+        await postRepository.findDonoEStatusById(
+            postId
+        );
+
+    if (!post || post.status !== "ATIVO") {
+        throw new AppError(
+            "Post não encontrado.",
+            404
+        );
+    }
+
+    if (post.usuario_id !== usuarioId) {
+        throw new AppError(
+            "Você não tem permissão para excluir este post.",
+            403
+        );
+    }
+
+    await postRepository.marcarComoExcluido(
+        postId
+    );
+};
 
 module.exports = {
     create,
@@ -296,5 +360,8 @@ module.exports = {
     getSalvos,
     comment,
     replyComment,
-    getCommentReplies
+    getCommentReplies,
+    findByCategoria,
+    findByUsuarioId,
+    removePost
 };

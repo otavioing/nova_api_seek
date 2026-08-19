@@ -482,6 +482,115 @@ const findSalvosByUsuario = async (usuarioId) => {
     return rows;
 };
 
+const findByCategoria = async (idCategoria) => {
+    const [rows] = await banco.query(
+        `
+        SELECT 
+            p.id,
+            p.titulo,
+            p.descricao,
+            p.capa,
+            p.data_criacao,
+
+            u.id AS usuario_id,
+            u.nome,
+            u.foto_perfil,
+
+            (
+                SELECT COUNT(*)
+                FROM likes_posts lp
+                WHERE lp.id_post = p.id
+            ) AS likes,
+
+            (
+                SELECT COUNT(*)
+                FROM posts_salvos ps
+                WHERE ps.id_post = p.id
+            ) AS salvos
+
+        FROM posts p
+        INNER JOIN posts_categorias_rel pcr ON p.id = pcr.id_post
+        INNER JOIN usuarios u ON p.id_usuario = u.id
+        WHERE pcr.id_categoria = ? AND p.status = 'ATIVO'
+        ORDER BY p.data_criacao DESC
+        `,
+        [idCategoria]
+    );
+
+    return rows;
+};
+
+const findByUsuarioId = async (usuarioId) => {
+    const [rows] = await banco.query(
+        `
+        SELECT
+            p.id,
+            p.titulo,
+            p.descricao,
+            p.capa,
+            p.data_criacao,
+
+            u.id AS usuario_id,
+            u.nome,
+            u.foto_perfil,
+
+            (
+                SELECT COUNT(*)
+                FROM likes_posts lp
+                WHERE lp.id_post = p.id
+            ) AS likes,
+
+            (
+                SELECT COUNT(*)
+                FROM posts_salvos ps
+                WHERE ps.id_post = p.id
+            ) AS salvos
+
+        FROM posts p
+
+        INNER JOIN usuarios u
+            ON u.id = p.id_usuario
+
+        WHERE p.id_usuario = ?
+        AND p.status = 'ATIVO'
+
+        ORDER BY p.data_criacao DESC
+        `,
+        [usuarioId]
+    );
+
+    return rows;
+};
+
+const marcarComoExcluido = async (postId) => {
+    await banco.query(
+        `
+        UPDATE posts
+        SET status = 'EXCLUIDO',
+            data_atualizacao = CURRENT_TIMESTAMP
+        WHERE id = ?
+        `,
+        [postId]
+    );
+};
+
+const findDonoEStatusById = async (postId) => {
+    const [rows] = await banco.query(
+        `
+        SELECT
+            id,
+            id_usuario,
+            status
+        FROM posts
+        WHERE id = ?
+        LIMIT 1
+        `,
+        [postId]
+    );
+
+    return rows[0] || null;
+};
+
 
 
 module.exports = {
@@ -504,4 +613,8 @@ module.exports = {
     addSave,
     removeSave,
     findSalvosByUsuario,
+    findByCategoria,
+    findByUsuarioId,
+    marcarComoExcluido,
+    findDonoEStatusById
 };

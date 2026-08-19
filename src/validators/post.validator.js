@@ -2,6 +2,10 @@ const response = require(
     "../utils/response"
 );
 
+const AppError = require(
+    "../utils/AppError"
+);
+
 const validarCriacaoPost = (
     req,
     res,
@@ -110,8 +114,83 @@ const validarCriacaoResposta = (
     next();
 };
 
+const listarPorCategoria = (req, res, next) => {
+    const { id_categoria } = req.params;
+    const errors = [];
+
+    if (!id_categoria || isNaN(id_categoria)) {
+        errors.push({
+            campo: "id_categoria",
+            mensagem: "O ID da categoria é obrigatório e deve ser um número."
+        });
+    }
+
+    if (errors.length > 0) {
+        return next(
+            new AppError(
+                errors[0].mensagem,
+                400,
+                errors
+            )
+        );
+    }
+
+    next();
+};
+
+const listarPorUsuario = (req, res, next) => {
+    const { id_usuario } = req.params;
+    const errors = [];
+
+    if (!id_usuario || isNaN(id_usuario)) {
+        errors.push({
+            campo: "id_usuario",
+            mensagem: "O ID do usuário é obrigatório e deve ser um número."
+        });
+    }
+
+    if (errors.length > 0) {
+        return next(
+            new AppError(
+                errors[0].mensagem,
+                400,
+                errors
+            )
+        );
+    }
+
+    next();
+};
+
+const validarIdPost = (req, res, next) => {
+    const { id } = req.params;
+    const errors = [];
+
+    if (!id || isNaN(id)) {
+        errors.push({
+            campo: "id",
+            mensagem: "O ID do post é obrigatório e deve ser um número."
+        });
+    }
+
+    if (errors.length > 0) {
+        return next(
+            new AppError(
+                errors[0].mensagem,
+                400,
+                errors
+            )
+        );
+    }
+
+    next();
+};
+
 module.exports = {
     validarCriacaoPost,
     validarCriacaoComentario,
-    validarCriacaoResposta
+    validarCriacaoResposta,
+    listarPorCategoria,
+    listarPorUsuario,
+    validarIdPost
 };
