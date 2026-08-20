@@ -16,6 +16,10 @@ router.post("/reenviar-codigo",usuarioValidator.reenviarCodigo,usuarioController
 router.get("/verificar-primeiro-login", authMiddleware, usuarioController.verificarPrimeiroLogin);
 // Completa o cadastro do usuário logado
 router.patch("/completar-cadastro", authMiddleware, usuarioController.completarCadastro);
+// Retorna as últimas 5 pesquisas do usuário autenticado
+router.get("/historico-pesquisas", authMiddleware, usuarioController.getUltimasPesquisas);
+// Pesquisa usuários por nome ou e-mail
+router.get("/pesquisar", usuarioValidator.pesquisar, usuarioController.pesquisarUsuarios);
 // Carrega a página pública de um usuário
 router.get("/:id", usuarioController.getPaginaUsuario);
 // Atualiza a foto de perfil do usuário logado

@@ -201,6 +201,81 @@ const updateBannerPerfil = async (
     return result;
 };
 
+const searchByNomeOrEmail = async (termo) => {
+
+    const termoPesquisa = `%${termo.trim()}%`;
+
+    const [rows] = await db.query(
+        `
+        SELECT
+            u.id,
+            u.nome,
+            u.email,
+            u.tipo_usuario,
+            u.foto_perfil
+        FROM usuarios u
+        WHERE (
+            u.nome LIKE ?
+            OR u.email LIKE ?
+        )
+        AND NOT EXISTS (
+            SELECT 1
+            FROM preferencias_privacidade pp
+            WHERE pp.id_usuario = u.id
+            AND pp.nome_configuracao = 'ocultar_pesquisa'
+            AND pp.status = 1
+        )
+        ORDER BY u.nome ASC
+        `,
+        [termoPesquisa, termoPesquisa]
+    );
+
+    return rows;
+};
+
+const createHistoricoPesquisa = async (
+    idUsuario,
+    termoPesquisa
+) => {
+
+    const [result] = await db.query(
+        `
+        INSERT INTO historico_pesquisas
+        (
+            id_usuario,
+            termo_pesquisa
+        )
+        VALUES
+        (?, ?)
+        `,
+        [idUsuario, termoPesquisa]
+    );
+
+    return result.insertId;
+};
+
+const findUltimasPesquisasByUsuarioId = async (
+    idUsuario,
+    limite = 5
+) => {
+
+    const [rows] = await db.query(
+        `
+        SELECT
+            id,
+            termo_pesquisa,
+            data_pesquisa
+        FROM historico_pesquisas
+        WHERE id_usuario = ?
+        ORDER BY data_pesquisa DESC
+        LIMIT ?
+        `,
+        [idUsuario, Number(limite)]
+    );
+
+    return rows;
+};
+
 module.exports = {
     create,
     updateVerificacao,
@@ -212,5 +287,8 @@ module.exports = {
     findPaginaById,
     updateCadastroCompleto,
     updateFotoPerfil,
-    updateBannerPerfil
+    updateBannerPerfil,
+    searchByNomeOrEmail,
+    createHistoricoPesquisa,
+    findUltimasPesquisasByUsuarioId
 };

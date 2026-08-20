@@ -12,6 +12,8 @@ const {
     montarUrlArquivo
 } = require("../utils/fileUrl");
 
+const AppError = require("../utils/AppError");
+
 const create = async (
     req,
     res,
@@ -244,6 +246,95 @@ const uploadBannerPerfil = async (
     }
 };
 
+const pesquisarUsuarios = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        const termo =
+            req.query?.termo ??
+            req.body?.termo;
+        let idUsuarioToken = null;
+
+        if (req.cookies?.token) {
+            try {
+                const decoded = jwt.verify(
+                    req.cookies.token,
+                    process.env.JWT_SECRET
+                );
+
+                idUsuarioToken = decoded.id;
+            } catch (error) {
+                if (
+                    error.name === "JsonWebTokenError" ||
+                    error.name === "TokenExpiredError"
+                ) {
+                    return next(
+                        new AppError(
+                            "Token inválido ou expirado.",
+                            401
+                        )
+                    );
+                }
+
+                return next(error);
+            }
+        }
+
+        const usuarios = await usuarioService.pesquisarUsuarios(
+            termo,
+            idUsuarioToken
+        );
+
+        const usuariosFormatados = usuarios.map(usuario => ({
+            ...usuario,
+            foto_perfil: montarUrlArquivo(
+                req,
+                usuario.foto_perfil
+            )
+        }));
+
+        return response.success(
+            res,
+            "Usuários encontrados com sucesso.",
+            usuariosFormatados,
+            usuariosFormatados.length
+        );
+
+    } catch (error) {
+        next(error);
+    }
+
+};
+
+const getUltimasPesquisas = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        const pesquisas = await usuarioService.getUltimasPesquisas(
+            req.user.id
+        );
+
+        return response.success(
+            res,
+            "Últimas pesquisas carregadas com sucesso.",
+            pesquisas,
+            pesquisas.length
+        );
+
+    } catch (error) {
+        next(error);
+    }
+
+};
+
 module.exports = {
     create,
     verificarConta,
@@ -252,5 +343,7 @@ module.exports = {
     completarCadastro,
     getPaginaUsuario,
     uploadFotoPerfil,
-    uploadBannerPerfil
+    uploadBannerPerfil,
+    pesquisarUsuarios,
+    getUltimasPesquisas
 };

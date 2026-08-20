@@ -112,8 +112,29 @@ const reenviarCodigo = (req, res, next) => {
     next();
 };
 
+const pesquisar = (req, res, next) => {
+    const termo =
+        req.query?.termo ??
+        req.body?.termo;
+    const errors = [];
+
+    if (!termo || typeof termo !== "string" || !termo.trim()) {
+        errors.push({
+            campo: "termo",
+            mensagem: "O termo de pesquisa é obrigatório."
+        });
+    }
+
+    if (errors.length > 0) {
+        return next(new AppError(errors[0].mensagem, 400, errors));
+    }
+
+    next();
+};
+
 module.exports = {
     create,
     verificar,
-    reenviarCodigo
+    reenviarCodigo,
+    pesquisar
 };

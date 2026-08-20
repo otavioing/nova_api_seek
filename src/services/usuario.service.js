@@ -224,6 +224,43 @@ const updateBannerPerfil = async (
     );
 };
 
+const pesquisarUsuarios = async (
+    termo,
+    idUsuarioToken = null
+) => {
+
+    const usuarios =
+        await usuarioRepository.searchByNomeOrEmail(
+            termo
+        );
+
+    if (
+        idUsuarioToken &&
+        usuarios.length > 0
+    ) {
+        await usuarioRepository.createHistoricoPesquisa(
+            idUsuarioToken,
+            termo
+        );
+    }
+
+    return usuarios;
+};
+
+const getUltimasPesquisas = async (idUsuario) => {
+
+    const usuario = await usuarioRepository.findById(idUsuario);
+
+    if (!usuario) {
+        throw new AppError("Usuário não encontrado.", 404);
+    }
+
+    return await usuarioRepository.findUltimasPesquisasByUsuarioId(
+        idUsuario,
+        5
+    );
+};
+
 
 module.exports = {
     create,
@@ -233,5 +270,7 @@ module.exports = {
     completarCadastro,
     getPaginaUsuario,
     updateFotoPerfil,
-    updateBannerPerfil
+    updateBannerPerfil,
+    pesquisarUsuarios,
+    getUltimasPesquisas
 };
