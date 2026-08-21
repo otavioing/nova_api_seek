@@ -257,6 +257,15 @@ const pesquisarUsuarios = async (
         const termo =
             req.query?.termo ??
             req.body?.termo;
+        const historico =
+            req.query?.historico ??
+            req.body?.historico;
+        const salvarNoHistorico = ![
+            false,
+            "false",
+            0,
+            "0"
+        ].includes(historico);
         let idUsuarioToken = null;
 
         if (req.cookies?.token) {
@@ -286,7 +295,8 @@ const pesquisarUsuarios = async (
 
         const usuarios = await usuarioService.pesquisarUsuarios(
             termo,
-            idUsuarioToken
+            idUsuarioToken,
+            salvarNoHistorico
         );
 
         const usuariosFormatados = usuarios.map(usuario => ({
@@ -335,6 +345,30 @@ const getUltimasPesquisas = async (
 
 };
 
+const deleteHistoricoPesquisa = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        await usuarioService.deleteHistoricoPesquisa(
+            req.params.id,
+            req.user.id
+        );
+
+        return response.success(
+            res,
+            "Pesquisa removida do histórico com sucesso."
+        );
+
+    } catch (error) {
+        next(error);
+    }
+
+};
+
 module.exports = {
     create,
     verificarConta,
@@ -345,5 +379,6 @@ module.exports = {
     uploadFotoPerfil,
     uploadBannerPerfil,
     pesquisarUsuarios,
-    getUltimasPesquisas
+    getUltimasPesquisas,
+    deleteHistoricoPesquisa
 };

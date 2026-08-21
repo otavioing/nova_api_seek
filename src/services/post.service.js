@@ -14,17 +14,49 @@ const create = async (
     usuarioId,
     titulo,
     descricao,
+    visibilidade,
+    conteudo18,
+    colaboradores,
+    permissaoComentarios,
     capa,
     categorias,
     imagens
 ) => {
+
+    const status =
+        String(visibilidade).toLowerCase() === "privado"
+            ? "OCULTO"
+            : "ATIVO";
+
+    const conteudoMais18 =
+        [true, "true", 1, "1"].includes(conteudo18) ? 1 : 0;
+
+    const colaboradoresIds =
+        Array.isArray(colaboradores)
+            ? colaboradores.map(id => Number(id))
+            : [];
+
+    const permissaoComentariosMap = {
+        ninguem: "NINGUEM",
+        seguidores: "SEGUIDORES",
+        todos: "TODOS"
+    };
+
+    const permissaoParaComentar =
+        permissaoComentariosMap[
+            String(permissaoComentarios).toLowerCase()
+        ];
 
     const postId =
         await postRepository.create(
             usuarioId,
             titulo,
             descricao,
-            capa
+            capa,
+            status,
+            conteudoMais18,
+            colaboradoresIds,
+            permissaoParaComentar
         );
 
     const categoriaIds =
@@ -97,20 +129,29 @@ const getById = async (
     };
 };
 
-const getAll = async () => {
-
-    const posts =
-        await postRepository.findAll();
-
+const carregarDadosExtrasPosts = async (posts) => {
     for (const post of posts) {
 
         post.imagens =
             await postRepository.getImagens(
                 post.id
             );
+
+        post.colaboradores =
+            await postRepository.findColaboradoresByPostId(
+                post.id
+            );
     }
 
     return posts;
+};
+
+const getAll = async () => {
+
+    const posts =
+        await postRepository.findAll();
+
+    return carregarDadosExtrasPosts(posts);
 };
 
 const like = async (
@@ -294,29 +335,13 @@ const findByCategoria = async (idCategoria) => {
         throw new AppError("Nenhum post encontrado para esta categoria.", 404);
     }
 
-    for (const post of posts) {
-
-        post.imagens =
-            await postRepository.getImagens(
-                post.id
-            );
-    }
-
-    return posts;
+    return carregarDadosExtrasPosts(posts);
 };
 
 const findByUsuarioId = async (usuarioId) => {
     const posts = await postRepository.findByUsuarioId(usuarioId);
 
-    for (const post of posts) {
-
-        post.imagens =
-            await postRepository.getImagens(
-                post.id
-            );
-    }
-
-    return posts;
+    return carregarDadosExtrasPosts(posts);
 };
 
 const removePost = async (

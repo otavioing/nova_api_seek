@@ -18,6 +18,8 @@ router.get("/verificar-primeiro-login", authMiddleware, usuarioController.verifi
 router.patch("/completar-cadastro", authMiddleware, usuarioController.completarCadastro);
 // Retorna as últimas 5 pesquisas do usuário autenticado
 router.get("/historico-pesquisas", authMiddleware, usuarioController.getUltimasPesquisas);
+// Exclui uma pesquisa do histórico do usuário autenticado
+router.delete("/historico-pesquisas/:id", authMiddleware, usuarioValidator.excluirHistoricoPesquisa, usuarioController.deleteHistoricoPesquisa);
 // Pesquisa usuários por nome ou e-mail
 router.get("/pesquisar", usuarioValidator.pesquisar, usuarioController.pesquisarUsuarios);
 // Carrega a página pública de um usuário

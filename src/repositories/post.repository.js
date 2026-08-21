@@ -10,6 +10,8 @@ const findAll = async () => {
             p.descricao,
             p.capa,
             p.data_criacao,
+            p.conteudo_18,
+            p.permissao_comentarios,
 
             u.id AS usuario_id,
             u.nome,
@@ -84,7 +86,11 @@ const create = async (
     usuarioId,
     titulo,
     descricao,
-    capa
+    capa,
+    status,
+    conteudoMais18,
+    colaboradoresIds,
+    permissaoComentarios
 ) => {
 
     const [result] = await banco.query(
@@ -94,10 +100,16 @@ const create = async (
             id_usuario,
             titulo,
             descricao,
-            capa
+            capa,
+            status,
+            conteudo_18,
+            permissao_comentarios
         )
         VALUES
         (
+            ?,
+            ?,
+            ?,
             ?,
             ?,
             ?,
@@ -108,9 +120,33 @@ const create = async (
             usuarioId,
             titulo,
             descricao,
-            capa
+            capa,
+            status,
+            conteudoMais18,
+            permissaoComentarios
         ]
     );
+
+    if (Array.isArray(colaboradoresIds) && colaboradoresIds.length > 0) {
+        const valores = colaboradoresIds.map(
+            idUsuarioColaborador => [
+                result.insertId,
+                idUsuarioColaborador
+            ]
+        );
+
+        await banco.query(
+            `
+            INSERT INTO posts_colaboradores_rel
+            (
+                id_post,
+                id_usuario
+            )
+            VALUES ?
+            `,
+            [valores]
+        );
+    }
 
     return result.insertId;
 };
@@ -491,6 +527,8 @@ const findByCategoria = async (idCategoria) => {
             p.descricao,
             p.capa,
             p.data_criacao,
+            p.conteudo_18,
+            p.permissao_comentarios,
 
             u.id AS usuario_id,
             u.nome,
@@ -529,6 +567,8 @@ const findByUsuarioId = async (usuarioId) => {
             p.descricao,
             p.capa,
             p.data_criacao,
+            p.conteudo_18,
+            p.permissao_comentarios,
 
             u.id AS usuario_id,
             u.nome,
@@ -591,6 +631,20 @@ const findDonoEStatusById = async (postId) => {
     return rows[0] || null;
 };
 
+const findColaboradoresByPostId = async (postId) => {
+    const [rows] = await banco.query(
+        `
+        SELECT id_usuario
+        FROM posts_colaboradores_rel
+        WHERE id_post = ?
+        ORDER BY id_usuario ASC
+        `,
+        [postId]
+    );
+
+    return rows.map(row => row.id_usuario);
+};
+
 
 
 module.exports = {
@@ -616,5 +670,6 @@ module.exports = {
     findByCategoria,
     findByUsuarioId,
     marcarComoExcluido,
-    findDonoEStatusById
+    findDonoEStatusById,
+    findColaboradoresByPostId
 };

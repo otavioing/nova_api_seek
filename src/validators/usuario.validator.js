@@ -132,9 +132,28 @@ const pesquisar = (req, res, next) => {
     next();
 };
 
+const excluirHistoricoPesquisa = (req, res, next) => {
+    const { id } = req.params;
+    const errors = [];
+
+    if (!id || Number.isNaN(Number(id)) || Number(id) <= 0) {
+        errors.push({
+            campo: "id",
+            mensagem: "O id da pesquisa é inválido."
+        });
+    }
+
+    if (errors.length > 0) {
+        return next(new AppError(errors[0].mensagem, 400, errors));
+    }
+
+    next();
+};
+
 module.exports = {
     create,
     verificar,
     reenviarCodigo,
-    pesquisar
+    pesquisar,
+    excluirHistoricoPesquisa
 };

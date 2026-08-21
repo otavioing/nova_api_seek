@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01/08/2026 às 01:07
+-- Tempo de geração: 22/08/2026 às 00:44
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -38,7 +38,12 @@ CREATE TABLE `categorias_posts` (
 
 INSERT INTO `categorias_posts` (`id`, `nome`) VALUES
 (2, 'Desenho'),
-(1, 'Foto');
+(6, 'Design'),
+(4, 'Ensaio Fotográfico'),
+(7, 'erthj'),
+(3, 'ferro'),
+(1, 'Foto'),
+(5, 'Pintura Digital');
 
 -- --------------------------------------------------------
 
@@ -70,7 +75,8 @@ CREATE TABLE `comentarios` (
 --
 
 INSERT INTO `comentarios` (`id`, `id_usuario`, `id_post`, `comentario`, `data_comentario`) VALUES
-(1, 1, 3, 'primeiro comentario', '2026-07-15 18:42:21');
+(1, 1, 3, 'primeiro comentario', '2026-07-15 18:42:21'),
+(2, 1, 3, 'primeiro comentario', '2026-08-15 19:46:15');
 
 -- --------------------------------------------------------
 
@@ -83,6 +89,13 @@ CREATE TABLE `conversas` (
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `conversas`
+--
+
+INSERT INTO `conversas` (`id`, `data_criacao`) VALUES
+(1, '2026-08-03 20:27:07');
+
 -- --------------------------------------------------------
 
 --
@@ -94,6 +107,14 @@ CREATE TABLE `conversa_participantes` (
   `id_conversa` int(10) UNSIGNED NOT NULL,
   `id_usuario` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `conversa_participantes`
+--
+
+INSERT INTO `conversa_participantes` (`id`, `id_conversa`, `id_usuario`) VALUES
+(2, 1, 1),
+(1, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -138,13 +159,6 @@ CREATE TABLE `likes_posts` (
   `data_curtida` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `likes_posts`
---
-
-INSERT INTO `likes_posts` (`id`, `id_usuario`, `id_post`, `data_curtida`) VALUES
-(2, 1, 3, '2026-07-15 18:44:58');
-
 -- --------------------------------------------------------
 
 --
@@ -158,6 +172,13 @@ CREATE TABLE `mensagens` (
   `mensagem` text NOT NULL,
   `data_envio` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `mensagens`
+--
+
+INSERT INTO `mensagens` (`id`, `id_conversa`, `id_remetente`, `mensagem`, `data_envio`) VALUES
+(1, 1, 3, 'Primeira mensagem da nova api', '2026-08-03 20:33:22');
 
 -- --------------------------------------------------------
 
@@ -180,7 +201,8 @@ CREATE TABLE `notificacoes` (
 --
 
 INSERT INTO `notificacoes` (`id`, `id_usuario`, `tipo`, `titulo`, `mensagem`, `lida`, `data_criacao`) VALUES
-(2, 2, 'NOVO_SEGUIDOR', 'Você tem um novo seguidor!', 'Um usuário começou a seguir você.', 1, '2026-07-20 18:30:24');
+(2, 2, 'NOVO_SEGUIDOR', 'Você tem um novo seguidor!', 'Um usuário começou a seguir você.', 1, '2026-07-20 18:30:24'),
+(3, 3, 'NOVO_SEGUIDOR', 'Você tem um novo seguidor!', 'Um usuário começou a seguir você.', 0, '2026-08-15 19:55:16');
 
 -- --------------------------------------------------------
 
@@ -235,17 +257,29 @@ CREATE TABLE `posts` (
   `capa` varchar(255) DEFAULT NULL,
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
   `data_atualizacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `status` enum('ATIVO','OCULTO','EXCLUIDO') NOT NULL DEFAULT 'ATIVO'
+  `status` enum('ATIVO','OCULTO','EXCLUIDO') NOT NULL DEFAULT 'ATIVO',
+  `conteudo_18` tinyint(1) NOT NULL DEFAULT 0,
+  `permissao_comentarios` enum('NINGUEM','SEGUIDORES','TODOS') NOT NULL DEFAULT 'TODOS'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `posts`
 --
 
-INSERT INTO `posts` (`id`, `id_usuario`, `titulo`, `descricao`, `capa`, `data_criacao`, `data_atualizacao`, `status`) VALUES
-(1, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', NULL, '2026-06-14 19:43:43', '2026-06-14 19:43:43', 'ATIVO'),
-(2, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', NULL, '2026-07-15 18:23:19', '2026-07-15 18:23:19', 'ATIVO'),
-(3, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1784139819816-589080689.jpg', '2026-07-15 18:23:39', '2026-07-15 18:23:39', 'ATIVO');
+INSERT INTO `posts` (`id`, `id_usuario`, `titulo`, `descricao`, `capa`, `data_criacao`, `data_atualizacao`, `status`, `conteudo_18`, `permissao_comentarios`) VALUES
+(1, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', NULL, '2026-06-14 19:43:43', '2026-06-14 19:43:43', 'ATIVO', 0, 'TODOS'),
+(2, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', NULL, '2026-07-15 18:23:19', '2026-07-15 18:23:19', 'ATIVO', 0, 'TODOS'),
+(3, 2, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1784139819816-589080689.jpg', '2026-07-15 18:23:39', '2026-08-19 13:47:15', 'ATIVO', 0, 'TODOS'),
+(4, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1787348649562-143968288.jpeg', '2026-08-21 21:44:09', '2026-08-21 21:44:09', 'ATIVO', 0, 'TODOS'),
+(5, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1787349002122-248895620.jpeg', '2026-08-21 21:50:02', '2026-08-21 21:50:02', 'OCULTO', 0, 'TODOS'),
+(6, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1787349504278-701911721.jpeg', '2026-08-21 21:58:24', '2026-08-21 21:58:24', 'OCULTO', 0, 'TODOS'),
+(7, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1787349548498-18203386.jpeg', '2026-08-21 21:59:08', '2026-08-21 21:59:08', 'OCULTO', 0, 'TODOS'),
+(8, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1787349763478-590028058.jpeg', '2026-08-21 22:02:43', '2026-08-21 22:02:43', 'OCULTO', 0, 'NINGUEM'),
+(9, 1, 'teste de criação de post pelo front', 'teste de criação de post pelo front', '/uploads/posts/1787351353807-949754987.jpg', '2026-08-21 22:29:13', '2026-08-21 22:29:13', 'OCULTO', 0, 'SEGUIDORES'),
+(10, 1, 'bnjk', 'jkl', '/uploads/posts/1787351442961-346056577.jpg', '2026-08-21 22:30:42', '2026-08-21 22:30:42', 'OCULTO', 0, 'SEGUIDORES'),
+(11, 1, 'eq2eq', 'eqqe', '/uploads/posts/1787351626311-378631509.jpg', '2026-08-21 22:33:46', '2026-08-21 22:33:46', 'OCULTO', 0, 'SEGUIDORES'),
+(12, 1, 'eq2eq', 'eqqe', '/uploads/posts/1787351662535-342303787.jpg', '2026-08-21 22:34:22', '2026-08-21 22:34:22', 'OCULTO', 0, 'SEGUIDORES'),
+(13, 1, 'bn,', 'ghjk', '/uploads/posts/1787352166139-403933220.jpg', '2026-08-21 22:42:46', '2026-08-21 22:43:41', 'ATIVO', 0, 'SEGUIDORES');
 
 -- --------------------------------------------------------
 
@@ -268,7 +302,45 @@ INSERT INTO `posts_categorias_rel` (`id_post`, `id_categoria`) VALUES
 (2, 1),
 (2, 2),
 (3, 1),
-(3, 2);
+(3, 2),
+(4, 1),
+(4, 2),
+(5, 1),
+(5, 2),
+(6, 1),
+(6, 2),
+(7, 1),
+(7, 2),
+(8, 1),
+(8, 2),
+(9, 3),
+(10, 4),
+(11, 5),
+(12, 5),
+(13, 1),
+(13, 4),
+(13, 6),
+(13, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `posts_colaboradores_rel`
+--
+
+CREATE TABLE `posts_colaboradores_rel` (
+  `id_post` int(10) UNSIGNED NOT NULL,
+  `id_usuario` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `posts_colaboradores_rel`
+--
+
+INSERT INTO `posts_colaboradores_rel` (`id_post`, `id_usuario`) VALUES
+(8, 4),
+(9, 4),
+(12, 3);
 
 -- --------------------------------------------------------
 
@@ -292,7 +364,22 @@ INSERT INTO `posts_imagens` (`id`, `id_post`, `caminho_imagem`) VALUES
 (3, 2, '/uploads/posts/1784139799620-953974127.png'),
 (4, 2, '/uploads/posts/1784139799622-207816212.png'),
 (5, 3, '/uploads/posts/1784139819816-346844268.png'),
-(6, 3, '/uploads/posts/1784139819817-667745280.png');
+(6, 3, '/uploads/posts/1784139819817-667745280.png'),
+(7, 4, '/uploads/posts/1787348649555-560395489.jpeg'),
+(8, 4, '/uploads/posts/1787348649568-486700039.jpeg'),
+(9, 5, '/uploads/posts/1787349002119-992292816.jpeg'),
+(10, 5, '/uploads/posts/1787349002124-827346810.jpeg'),
+(11, 6, '/uploads/posts/1787349504275-131915629.jpeg'),
+(12, 6, '/uploads/posts/1787349504280-931089459.jpeg'),
+(13, 7, '/uploads/posts/1787349548496-984295088.jpeg'),
+(14, 7, '/uploads/posts/1787349548501-688507713.jpeg'),
+(15, 8, '/uploads/posts/1787349763471-549092295.jpeg'),
+(16, 8, '/uploads/posts/1787349763482-61526785.jpeg'),
+(17, 9, '/uploads/posts/1787351353806-993169166.jpg'),
+(18, 10, '/uploads/posts/1787351442961-360784092.jpg'),
+(19, 11, '/uploads/posts/1787351626311-461047464.jpg'),
+(20, 12, '/uploads/posts/1787351662535-493740607.jpg'),
+(21, 13, '/uploads/posts/1787352166138-252932001.jpg');
 
 -- --------------------------------------------------------
 
@@ -361,7 +448,8 @@ CREATE TABLE `respostas_comentarios` (
 --
 
 INSERT INTO `respostas_comentarios` (`id`, `id_comentario`, `id_usuario`, `resposta`, `data_resposta`) VALUES
-(1, 1, 1, 'primeira resposta', '2026-07-15 18:44:01');
+(1, 1, 1, 'primeira resposta', '2026-07-15 18:44:01'),
+(2, 1, 1, 'primeira resposta', '2026-08-15 19:46:43');
 
 -- --------------------------------------------------------
 
@@ -381,7 +469,7 @@ CREATE TABLE `seguidores` (
 --
 
 INSERT INTO `seguidores` (`id`, `id_seguidor`, `id_seguido`, `data_seguimento`) VALUES
-(8, 1, 2, '2026-07-20 18:30:24');
+(9, 1, 3, '2026-08-15 19:55:16');
 
 -- --------------------------------------------------------
 
@@ -411,9 +499,13 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `tipo_usuario`, `nome`, `email`, `senha`, `conta_verificada`, `codigo_verificacao`, `expiracao_codigo`, `banido`, `foto_perfil`, `banner_perfil`, `cnpj`, `data_criacao`, `cadastro_completo`) VALUES
-(1, 'PF', 'Otávio Domingues', 'otavio@gmail.com', '$2b$10$jwO5Au26ZAqA.7K9rdYQkew3wSSGCD4C/wc3OISBwjJtE8AcI9WOO', 0, NULL, NULL, 0, '/uploads/perfil/foto.jpg', '/uploads/perfil/foto.jpg', NULL, '2026-06-13 19:13:04', 1),
-(2, 'PF', 'Otávio Domingues 2', 'otavio2@gmail.com', '$2b$10$S.p7JiTlahu910fQWgjX0O1OZ8Zf8zDKsnDPy/vpDnC.PdYBnLQVe', 0, NULL, NULL, 0, NULL, NULL, NULL, '2026-07-20 17:56:51', 0),
-(3, 'PF', 'Otávio Domingues 2', 'otaviodominguessilva@gmail.com', '$2b$10$IAoGQbhsltGezuXFGktuGOYxP554rQkIIYZj/FeeEzN0SyEx1UJfS', 1, NULL, NULL, 1, NULL, NULL, NULL, '2026-07-30 21:18:50', 0);
+(1, 'PF', 'Otávio Domingues', 'otavio@gmail.com', '$2b$10$jwO5Au26ZAqA.7K9rdYQkew3wSSGCD4C/wc3OISBwjJtE8AcI9WOO', 1, NULL, NULL, 0, '/uploads/perfil/foto.jpg', '/uploads/perfil/foto.jpg', NULL, '2026-06-13 19:13:04', 1),
+(2, 'PF', 'Otávio Domingues 2', 'otavio2@gmail.com', '$2b$10$S.p7JiTlahu910fQWgjX0O1OZ8Zf8zDKsnDPy/vpDnC.PdYBnLQVe', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-07-20 17:56:51', 0),
+(3, 'PF', 'Otávio Domingues 2', 'otaviodominguessilva@gmail.com', '$2b$10$.B4GFcIgqFJkt8YsHO/vweSO8qVMbow1ssjq5W1L6lH1kFon.kME6', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-07-30 21:18:50', 0),
+(4, 'EMPRESA', 'Otávio Domingues 2', 'tectonicroom356@gmail.com', '$2b$10$S.sNx7LgEUUqij4Bp7kUbes8nkLnZ6fZoH0yMa1.SQ.Ki0I7S6AEm', 1, NULL, NULL, 0, NULL, NULL, '123456', '2026-08-15 13:19:37', 0),
+(5, 'PF', 'teste criação front', 'fortnite909099@gmail.com', '$2b$10$5MHP3LlZNk3QLhmvhg7LOexQwrFjkX5jNHgDDZ/Lj1wYdg.EFyTHe', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-08-15 13:29:15', 0),
+(6, 'PF', 'caca', 'gustavodomingues21406@gmail.com', '$2b$10$5m9wFoDTd20ON3l1fdLiluWbEpqMzwO72/SSpbkRonNkHoOoDlsm6', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-08-15 13:39:54', 0),
+(7, 'PF', 'wdaesfdg', 'otaviodominguessilvagemas@gmail.com', '$2b$10$wuEG3axbckkvUBslKFUoS.11veGlvpdhfPNnew6I8g.Fui2fcDMYu', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-08-15 13:44:19', 0);
 
 -- --------------------------------------------------------
 
@@ -586,6 +678,13 @@ ALTER TABLE `posts_categorias_rel`
   ADD KEY `fk_rel_categorias_posts` (`id_categoria`);
 
 --
+-- Índices de tabela `posts_colaboradores_rel`
+--
+ALTER TABLE `posts_colaboradores_rel`
+  ADD PRIMARY KEY (`id_post`,`id_usuario`),
+  ADD KEY `fk_posts_colaboradores_usuario` (`id_usuario`);
+
+--
 -- Índices de tabela `posts_imagens`
 --
 ALTER TABLE `posts_imagens`
@@ -669,7 +768,7 @@ ALTER TABLE `vagas_favoritas`
 -- AUTO_INCREMENT de tabela `categorias_posts`
 --
 ALTER TABLE `categorias_posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `categorias_vagas`
@@ -681,19 +780,19 @@ ALTER TABLE `categorias_vagas`
 -- AUTO_INCREMENT de tabela `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `conversas`
 --
 ALTER TABLE `conversas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `conversa_participantes`
 --
 ALTER TABLE `conversa_participantes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `denuncias`
@@ -705,25 +804,25 @@ ALTER TABLE `denuncias`
 -- AUTO_INCREMENT de tabela `historico_pesquisas`
 --
 ALTER TABLE `historico_pesquisas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `likes_posts`
 --
 ALTER TABLE `likes_posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `mensagens`
 --
 ALTER TABLE `mensagens`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `perfis_empresa`
@@ -741,19 +840,19 @@ ALTER TABLE `perfis_pessoa_fisica`
 -- AUTO_INCREMENT de tabela `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `posts_imagens`
 --
 ALTER TABLE `posts_imagens`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `posts_salvos`
 --
 ALTER TABLE `posts_salvos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `preferencias_notificacoes`
@@ -771,7 +870,7 @@ ALTER TABLE `preferencias_privacidade`
 -- AUTO_INCREMENT de tabela `respostas_comentarios`
 --
 ALTER TABLE `respostas_comentarios`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `seguidores`
@@ -871,6 +970,13 @@ ALTER TABLE `posts`
 ALTER TABLE `posts_categorias_rel`
   ADD CONSTRAINT `fk_rel_categorias_posts` FOREIGN KEY (`id_categoria`) REFERENCES `categorias_posts` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_rel_posts` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `posts_colaboradores_rel`
+--
+ALTER TABLE `posts_colaboradores_rel`
+  ADD CONSTRAINT `fk_posts_colaboradores_post` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_posts_colaboradores_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Restrições para tabelas `posts_imagens`

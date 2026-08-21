@@ -226,7 +226,8 @@ const updateBannerPerfil = async (
 
 const pesquisarUsuarios = async (
     termo,
-    idUsuarioToken = null
+    idUsuarioToken = null,
+    salvarNoHistorico = true
 ) => {
 
     const usuarios =
@@ -236,7 +237,8 @@ const pesquisarUsuarios = async (
 
     if (
         idUsuarioToken &&
-        usuarios.length > 0
+        usuarios.length > 0 &&
+        salvarNoHistorico
     ) {
         await usuarioRepository.createHistoricoPesquisa(
             idUsuarioToken,
@@ -261,6 +263,37 @@ const getUltimasPesquisas = async (idUsuario) => {
     );
 };
 
+const deleteHistoricoPesquisa = async (
+    idHistorico,
+    idUsuario
+) => {
+
+    const historico =
+        await usuarioRepository.findHistoricoPesquisaById(
+            idHistorico
+        );
+
+    if (!historico) {
+        throw new AppError(
+            "Pesquisa não encontrada.",
+            404
+        );
+    }
+
+    if (Number(historico.id_usuario) !== Number(idUsuario)) {
+        throw new AppError(
+            "Você não tem permissão para excluir esta pesquisa.",
+            403
+        );
+    }
+
+    await usuarioRepository.deleteHistoricoPesquisaById(
+        idHistorico
+    );
+
+    return;
+};
+
 
 module.exports = {
     create,
@@ -272,5 +305,6 @@ module.exports = {
     updateFotoPerfil,
     updateBannerPerfil,
     pesquisarUsuarios,
-    getUltimasPesquisas
+    getUltimasPesquisas,
+    deleteHistoricoPesquisa
 };

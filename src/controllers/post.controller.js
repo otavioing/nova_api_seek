@@ -64,7 +64,12 @@ const formatarPosts = (req, posts) => {
             data_postagem: post.data_criacao,
             tempo_atras: tempoAtras,
             likes: post.likes,
-            salvos: post.salvos
+            salvos: post.salvos,
+            conteudo_18: Number(post.conteudo_18) === 1,
+            permissao_comentarios: post.permissao_comentarios
+                ? String(post.permissao_comentarios).toLowerCase()
+                : "todos",
+            colaboradores: post.colaboradores || []
         };
     });
 };
@@ -79,10 +84,14 @@ const create = async (
 
         const {
             titulo,
-            descricao
+            descricao,
+            visibilidade,
+            conteudo_18,
+            permissao_comentarios
         } = req.body;
 
         let categorias = req.body.categorias;
+        let colaboradores = req.body.colaboradores;
 
         if (
             typeof categorias ===
@@ -90,6 +99,14 @@ const create = async (
         ) {
             categorias =
                 JSON.parse(categorias);
+        }
+
+        if (
+            typeof colaboradores ===
+            "string"
+        ) {
+            colaboradores =
+                JSON.parse(colaboradores);
         }
 
         const capa =
@@ -108,6 +125,10 @@ const create = async (
                 req.user.id,
                 titulo,
                 descricao,
+                visibilidade,
+                conteudo_18,
+                colaboradores,
+                permissao_comentarios,
                 capa,
                 categorias,
                 imagens
@@ -218,133 +239,11 @@ const getAll = async (
         const posts =
             await postService.getAll();
 
-        const agora = new Date();
-
         const postsFormatados =
-            posts.map(post => {
-
-                const dataPostagem =
-                    new Date(
-                        post.data_criacao
-                    );
-
-                const diferenca =
-                    agora - dataPostagem;
-
-                const segundos =
-                    Math.floor(
-                        diferenca / 1000
-                    );
-
-                const minutos =
-                    Math.floor(
-                        segundos / 60
-                    );
-
-                const horas =
-                    Math.floor(
-                        minutos / 60
-                    );
-
-                const dias =
-                    Math.floor(
-                        horas / 24
-                    );
-
-                let tempoAtras;
-
-                if (segundos < 60) {
-
-                    tempoAtras =
-                        "Agora";
-
-                } else if (minutos < 60) {
-
-                    tempoAtras =
-                        `${minutos} ${
-                            minutos === 1
-                                ? "minuto"
-                                : "minutos"
-                        } atrás`;
-
-                } else if (horas < 24) {
-
-                    tempoAtras =
-                        `${horas} ${
-                            horas === 1
-                                ? "hora"
-                                : "horas"
-                        } atrás`;
-
-                } else if (dias < 30) {
-
-                    tempoAtras =
-                        `${dias} ${
-                            dias === 1
-                                ? "dia"
-                                : "dias"
-                        } atrás`;
-
-                } else {
-
-                    tempoAtras =
-                        dataPostagem.toLocaleDateString(
-                            "pt-BR"
-                        );
-                }
-
-                return {
-
-                    id: post.id,
-
-                    titulo:
-                        post.titulo,
-
-                    descricao:
-                        post.descricao,
-
-                    capa:
-                        montarUrlArquivo(
-                            req,
-                            post.capa
-                        ),
-
-                    imagens:
-                        post.imagens.map(
-                            imagem =>
-                                montarUrlArquivo(
-                                    req,
-                                    imagem.caminho_imagem
-                                )
-                        ),
-
-                    criador: {
-                        id:
-                            post.usuario_id,
-
-                        nome:
-                            post.nome,
-
-                        foto_perfil:
-                            montarUrlArquivo(
-                                req,
-                                post.foto_perfil
-                            )
-                    },
-
-                    data_postagem:
-                        post.data_criacao,
-
-                    tempo_atras:
-                        tempoAtras,
-
-                    likes:
-                        post.likes,
-
-                    salvos:
-                        post.salvos
-                };
-            });
+            formatarPosts(
+                req,
+                posts
+            );
 
         return response.success(
             res,

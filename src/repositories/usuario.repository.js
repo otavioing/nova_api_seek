@@ -238,6 +238,24 @@ const createHistoricoPesquisa = async (
     termoPesquisa
 ) => {
 
+    const termoNormalizado = termoPesquisa.trim();
+
+    const [updateResult] = await db.query(
+        `
+        UPDATE historico_pesquisas
+        SET data_pesquisa = CURRENT_TIMESTAMP
+        WHERE id_usuario = ?
+        AND termo_pesquisa = ?
+        ORDER BY id DESC
+        LIMIT 1
+        `,
+        [idUsuario, termoNormalizado]
+    );
+
+    if (updateResult.affectedRows > 0) {
+        return updateResult;
+    }
+
     const [result] = await db.query(
         `
         INSERT INTO historico_pesquisas
@@ -248,7 +266,7 @@ const createHistoricoPesquisa = async (
         VALUES
         (?, ?)
         `,
-        [idUsuario, termoPesquisa]
+        [idUsuario, termoNormalizado]
     );
 
     return result.insertId;
@@ -276,6 +294,36 @@ const findUltimasPesquisasByUsuarioId = async (
     return rows;
 };
 
+const findHistoricoPesquisaById = async (id) => {
+
+    const [rows] = await db.query(
+        `
+        SELECT
+            id,
+            id_usuario
+        FROM historico_pesquisas
+        WHERE id = ?
+        LIMIT 1
+        `,
+        [id]
+    );
+
+    return rows[0] || null;
+};
+
+const deleteHistoricoPesquisaById = async (id) => {
+
+    const [result] = await db.query(
+        `
+        DELETE FROM historico_pesquisas
+        WHERE id = ?
+        `,
+        [id]
+    );
+
+    return result;
+};
+
 module.exports = {
     create,
     updateVerificacao,
@@ -290,5 +338,7 @@ module.exports = {
     updateBannerPerfil,
     searchByNomeOrEmail,
     createHistoricoPesquisa,
-    findUltimasPesquisasByUsuarioId
+    findUltimasPesquisasByUsuarioId,
+    findHistoricoPesquisaById,
+    deleteHistoricoPesquisaById
 };
