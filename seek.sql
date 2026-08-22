@@ -233,6 +233,7 @@ CREATE TABLE `perfis_empresa` (
 CREATE TABLE `perfis_pessoa_fisica` (
   `id` int(10) UNSIGNED NOT NULL,
   `usuario_id` int(10) UNSIGNED NOT NULL,
+  `nome_usuario` varchar(100) DEFAULT NULL,
   `telefone` varchar(20) DEFAULT NULL,
   `cidade` varchar(100) DEFAULT NULL,
   `estado` varchar(100) DEFAULT NULL,

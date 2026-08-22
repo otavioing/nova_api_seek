@@ -5,7 +5,9 @@ const findById = async (id) => {
 
     const [rows] = await db.query(
         `
-        SELECT id
+        SELECT
+            id,
+            tipo_usuario
         FROM usuarios
         WHERE id = ?
         LIMIT 1
@@ -172,7 +174,7 @@ const updateFotoPerfil = async (
     caminho
 ) => {
 
-    const [result] = await banco.query(
+    const [result] = await db.query(
         `
         UPDATE usuarios
         SET foto_perfil = ?
@@ -189,13 +191,105 @@ const updateBannerPerfil = async (
     caminho
 ) => {
 
-    const [result] = await banco.query(
+    const [result] = await db.query(
         `
         UPDATE usuarios
         SET banner_perfil = ?
         WHERE id = ?
         `,
         [caminho, usuarioId]
+    );
+
+    return result;
+};
+
+const updatePerfilEmpresa = async (
+    usuarioId,
+    dados
+) => {
+
+    const [result] = await db.query(
+        `
+        INSERT INTO perfis_empresa
+        (
+            usuario_id,
+            razao_social,
+            nome_fantasia,
+            telefone_comercial,
+            categoria_negocio,
+            numero_funcionarios,
+            endereco_completo,
+            descricao,
+            site
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            razao_social = VALUES(razao_social),
+            nome_fantasia = VALUES(nome_fantasia),
+            telefone_comercial = VALUES(telefone_comercial),
+            categoria_negocio = VALUES(categoria_negocio),
+            numero_funcionarios = VALUES(numero_funcionarios),
+            endereco_completo = VALUES(endereco_completo),
+            descricao = VALUES(descricao),
+            site = VALUES(site)
+        `,
+        [
+            usuarioId,
+            dados.razao_social,
+            dados.nome_fantasia,
+            dados.telefone_comercial,
+            dados.categoria_negocio,
+            dados.numero_funcionarios,
+            dados.endereco_completo,
+            dados.descricao,
+            dados.site
+        ]
+    );
+
+    return result;
+};
+
+const updatePerfilPessoaFisica = async (
+    usuarioId,
+    dados
+) => {
+
+    const [result] = await db.query(
+        `
+        INSERT INTO perfis_pessoa_fisica
+        (
+            usuario_id,
+            nome_usuario,
+            telefone,
+            cidade,
+            estado,
+            sobre,
+            linkedin,
+            github,
+            curriculo
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            nome_usuario = VALUES(nome_usuario),
+            telefone = VALUES(telefone),
+            cidade = VALUES(cidade),
+            estado = VALUES(estado),
+            sobre = VALUES(sobre),
+            linkedin = VALUES(linkedin),
+            github = VALUES(github),
+            curriculo = VALUES(curriculo)
+        `,
+        [
+            usuarioId,
+            dados.nome_usuario,
+            dados.telefone,
+            dados.cidade,
+            dados.estado,
+            dados.sobre,
+            dados.linkedin,
+            dados.github,
+            dados.curriculo
+        ]
     );
 
     return result;
@@ -336,6 +430,8 @@ module.exports = {
     updateCadastroCompleto,
     updateFotoPerfil,
     updateBannerPerfil,
+    updatePerfilEmpresa,
+    updatePerfilPessoaFisica,
     searchByNomeOrEmail,
     createHistoricoPesquisa,
     findUltimasPesquisasByUsuarioId,

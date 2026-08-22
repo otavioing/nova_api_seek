@@ -25,9 +25,12 @@ router.get("/pesquisar", usuarioValidator.pesquisar, usuarioController.pesquisar
 // Carrega a página pública de um usuário
 router.get("/:id", usuarioController.getPaginaUsuario);
 // Atualiza a foto de perfil do usuário logado
-router.put("/:id/foto-perfil",authMiddleware,uploadPerfil.single("foto"),usuarioController.uploadFotoPerfil);
+router.put("/foto-perfil",authMiddleware,uploadPerfil.single("foto"),usuarioController.uploadFotoPerfil);
 // Atualiza o banner de perfil do usuário logado
-router.put("/:id/banner-perfil",authMiddleware,uploadBanner.single("banner"),usuarioController.uploadBannerPerfil);
-11
+router.put("/banner-perfil",authMiddleware,uploadBanner.single("banner"),usuarioController.uploadBannerPerfil);
+// Atualiza todas as informações do perfil empresarial do usuário logado
+router.put("/perfil-empresa",authMiddleware,usuarioController.atualizarPerfilEmpresa);
+// Atualiza todas as informações do perfil de pessoa física do usuário logado
+router.put("/perfil-pessoa-fisica",authMiddleware,usuarioController.atualizarPerfilPessoaFisica);
 
 module.exports = router;

@@ -224,6 +224,54 @@ const updateBannerPerfil = async (
     );
 };
 
+const validarTipoUsuario = async (
+    usuarioId,
+    tipoEsperado
+) => {
+
+    const usuario = await usuarioRepository.findById(usuarioId);
+
+    if (!usuario) {
+        throw new AppError(
+            "Usuário não encontrado.",
+            404
+        );
+    }
+
+    if (usuario.tipo_usuario !== tipoEsperado) {
+        throw new AppError(
+            `Esta rota é exclusiva para usuários do tipo ${tipoEsperado}.`,
+            403
+        );
+    }
+};
+
+const updatePerfilEmpresa = async (
+    usuarioId,
+    dados
+) => {
+
+    await validarTipoUsuario(usuarioId, "EMPRESA");
+
+    return await usuarioRepository.updatePerfilEmpresa(
+        usuarioId,
+        dados
+    );
+};
+
+const updatePerfilPessoaFisica = async (
+    usuarioId,
+    dados
+) => {
+
+    await validarTipoUsuario(usuarioId, "PF");
+
+    return await usuarioRepository.updatePerfilPessoaFisica(
+        usuarioId,
+        dados
+    );
+};
+
 const pesquisarUsuarios = async (
     termo,
     idUsuarioToken = null,
@@ -304,6 +352,8 @@ module.exports = {
     getPaginaUsuario,
     updateFotoPerfil,
     updateBannerPerfil,
+    updatePerfilEmpresa,
+    updatePerfilPessoaFisica,
     pesquisarUsuarios,
     getUltimasPesquisas,
     deleteHistoricoPesquisa

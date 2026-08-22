@@ -180,7 +180,7 @@ const uploadFotoPerfil = async (
 
     try {
 
-        const { id } = req.params;
+        const id = req.user.id;
 
         if (!req.file) {
             return response.error(
@@ -217,7 +217,7 @@ const uploadBannerPerfil = async (
 
     try {
 
-        const { id } = req.params;
+        const id = req.user.id;
 
         if (!req.file) {
             return response.error(
@@ -239,6 +239,52 @@ const uploadBannerPerfil = async (
             {
                 banner_perfil: caminho
             }
+        );
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+const atualizarPerfilEmpresa = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        await usuarioService.updatePerfilEmpresa(
+            req.user.id,
+            req.body
+        );
+
+        return response.success(
+            res,
+            "Perfil empresarial atualizado com sucesso."
+        );
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+const atualizarPerfilPessoaFisica = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        await usuarioService.updatePerfilPessoaFisica(
+            req.user.id,
+            req.body
+        );
+
+        return response.success(
+            res,
+            "Perfil de pessoa física atualizado com sucesso."
         );
 
     } catch (error) {
@@ -378,6 +424,8 @@ module.exports = {
     getPaginaUsuario,
     uploadFotoPerfil,
     uploadBannerPerfil,
+    atualizarPerfilEmpresa,
+    atualizarPerfilPessoaFisica,
     pesquisarUsuarios,
     getUltimasPesquisas,
     deleteHistoricoPesquisa

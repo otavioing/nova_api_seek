@@ -20,7 +20,7 @@ collection:
         meta:
           id: req_ec3a23d10e3e47798e7a909ee6787fb1
           created: 1774871076107
-          modified: 1785790275272
+          modified: 1786799976376
           isPrivate: false
           description: ""
           sortKey: -1781378185523
@@ -29,9 +29,10 @@ collection:
           mimeType: application/json
           text: |-
             {
-                "tipo_usuario": "PF",
+                "tipo_usuario": "EMPRESA",
                 "nome": "Otávio Domingues 2",
-                "email": "otaviodominguessilva@gmail.com",
+            		"cnpj": "123456",
+                "email": "tectonicroom356@gmail.com",
                 "senha": "123456"
             }
         headers:
@@ -54,7 +55,7 @@ collection:
         meta:
           id: req_cfefedcd4bf94082ac3be0a20de3d9b0
           created: 1781378199948
-          modified: 1785789400178
+          modified: 1787149826305
           isPrivate: false
           description: ""
           sortKey: -1781378199949
@@ -63,9 +64,8 @@ collection:
           mimeType: application/json
           text: |-
             {
-                "email": "otaviodominguessilva@gmail.com",
-            	    "senha": "Otavio2of"
-
+                "email": "otavio@gmail.com",
+            	   "senha": "123456"
             }
         headers:
           - name: Content-Type
@@ -88,7 +88,7 @@ collection:
         meta:
           id: req_4cabf8a1576f4eacbe837cde9381cd69
           created: 1781449002808
-          modified: 1785790313539
+          modified: 1786806810532
           isPrivate: false
           description: ""
           sortKey: -1781449002808
@@ -116,7 +116,7 @@ collection:
         meta:
           id: req_2bf8da24849f42b38371a2cb611b3964
           created: 1781449256915
-          modified: 1785790350045
+          modified: 1786806881005
           isPrivate: false
           description: ""
           sortKey: -1781449066334.75
@@ -145,7 +145,7 @@ collection:
         meta:
           id: req_878c3ac1ac614fe7a6e1b67777aeef6b
           created: 1785532467320
-          modified: 1785790287533
+          modified: 1786800328315
           isPrivate: false
           description: ""
           sortKey: -1781378192736
@@ -154,8 +154,8 @@ collection:
           mimeType: application/json
           text: |-
             {
-            	"email": "otaviodominguessilva@gmail.com",
-            	"codigo": "312817"
+            	"email": "tectonicroom356@gmail.com",
+            	"codigo": "353894"
             }
         headers:
           - name: Content-Type
@@ -173,7 +173,7 @@ collection:
         meta:
           id: req_86090013bbb842809ddc936d68788ee9
           created: 1785532973094
-          modified: 1785790297872
+          modified: 1786800290132
           isPrivate: false
           description: ""
           sortKey: -1781378196342.5
@@ -182,7 +182,7 @@ collection:
           mimeType: application/json
           text: |-
             {
-            	"email": "otaviodominguessilva@gmail.com"
+            	"email": "tectonicroom356@gmail.com"
             }
         headers:
           - name: Content-Type
@@ -228,10 +228,10 @@ collection:
         meta:
           id: req_759bb302f7fe4af98142449a81e81ce3
           created: 1785757499689
-          modified: 1785789425329
+          modified: 1786798340638
           isPrivate: false
           description: ""
-          sortKey: -1781449193388.25
+          sortKey: -1781449145743.1875
         method: POST
         body:
           mimeType: application/json
@@ -240,6 +240,88 @@ collection:
             	"email": "otaviodominguessilva@gmail.com",
             	"codigo": "724995",
             	"nova_senha": "Otavio2of"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/auth/me
+        name: Retorna informações do usuário autenticado
+        meta:
+          id: req_67c9ccca6f1e422b8443832bcba80814
+          created: 1786798237166
+          modified: 1787137105273
+          isPrivate: false
+          description: ""
+          sortKey: -1781449177506.5625
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/auth/logout
+        name: Faz o logout de usuário
+        meta:
+          id: req_d93c66dc04c94725a080390291f6b536
+          created: 1786798239962
+          modified: 1786799004611
+          isPrivate: false
+          description: ""
+          sortKey: -1781413601378.5
+        method: POST
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/auth/id
+        name: Retorna o ID do usuário autenticado
+        meta:
+          id: req_2d6473a182974113bd4aabcd6ade3987
+          created: 1787149786995
+          modified: 1787172514873
+          isPrivate: false
+          description: ""
+          sortKey: -1782234319039.0312
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4500/usuarios/pesquisar
+        name: Pesquisa usuários por nome ou e-mail
+        meta:
+          id: req_3542b668338441ec83340db9a1de6c41
+          created: 1787172507412
+          modified: 1787350396804
+          isPrivate: false
+          description: ""
+          sortKey: -1787242434216
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+             "termo": "@gmail.com",
+            "historico": false
             }
         headers:
           - name: Content-Type
@@ -265,7 +347,7 @@ collection:
             meta:
               id: req_47de0c1588b94b298d74ea0855ac26e5
               created: 1784571711645
-              modified: 1785789485198
+              modified: 1786805488888
               isPrivate: false
               description: ""
               sortKey: -1784572321273
@@ -289,7 +371,7 @@ collection:
             meta:
               id: req_a057d1d6848b47538b18a5ef4da8d07d
               created: 1784571712382
-              modified: 1785789493460
+              modified: 1786806131004
               isPrivate: false
               description: ""
               sortKey: -1784572321173
@@ -313,7 +395,7 @@ collection:
             meta:
               id: req_635b7380d2cb4e3daa1032a7c21bf4a6
               created: 1784571712976
-              modified: 1785789514120
+              modified: 1786805883297
               isPrivate: false
               description: ""
               sortKey: -1784572321073
@@ -337,7 +419,7 @@ collection:
             meta:
               id: req_4f0d582157f34ecc8661d16289667fe0
               created: 1784571713541
-              modified: 1785789507157
+              modified: 1786805697632
               isPrivate: false
               description: ""
               sortKey: -1784572320973
@@ -364,13 +446,13 @@ collection:
           sortKey: -1784572403544
           description: ""
         children:
-          - url: http://localhost:4500/seguidores/status/1
+          - url: http://localhost:4500/seguidores/status/2
             name: Verifica o status de seguimento entre o usuário logado e outro usuário
               específico
             meta:
               id: req_22459d3e2cb849b9b70807ac5dcead68
               created: 1784569946867
-              modified: 1785790127905
+              modified: 1787143712979
               isPrivate: false
               description: ""
               sortKey: -1784572407172
@@ -389,12 +471,12 @@ collection:
                 send: true
                 store: true
               rebuildPath: true
-          - url: http://localhost:4500/seguidores/2
+          - url: http://localhost:4500/seguidores/1
             name: Segue um usuário específico
             meta:
               id: req_09dedaca60fe41fd937feae00e328384
               created: 1784569948418
-              modified: 1785790009614
+              modified: 1787145326537
               isPrivate: false
               description: ""
               sortKey: -1784572407572
@@ -418,7 +500,7 @@ collection:
             meta:
               id: req_da58352f135545b08bb467d284a62408
               created: 1784569949010
-              modified: 1785790027215
+              modified: 1787145266590
               isPrivate: false
               description: ""
               sortKey: -1784572407472
@@ -437,12 +519,12 @@ collection:
                 send: true
                 store: true
               rebuildPath: true
-          - url: http://localhost:4500/seguidores/seguidores/2
+          - url: http://localhost:4500/seguidores/seguidores/3
             name: Lista os seguidores de um usuário específico
             meta:
               id: req_70ffc576f23a43268ff9b9d47c3088c5
               created: 1784569949880
-              modified: 1785790109065
+              modified: 1787145330751
               isPrivate: false
               description: ""
               sortKey: -1784572407372
@@ -461,12 +543,12 @@ collection:
                 send: true
                 store: true
               rebuildPath: true
-          - url: http://localhost:4500/seguidores/seguindo/1
+          - url: http://localhost:4500/seguidores/seguindo/2
             name: Lista os usuários que um usuário específico está seguindo
             meta:
               id: req_28dd852cea34421fa77df84ce09f9eb1
               created: 1784569950561
-              modified: 1785790104153
+              modified: 1787143676155
               isPrivate: false
               description: ""
               sortKey: -1784572407272
@@ -530,7 +612,7 @@ collection:
             meta:
               id: req_b81679df48f548719e4492b254fb3489
               created: 1784140807957
-              modified: 1785789803174
+              modified: 1786823064616
               isPrivate: false
               description: ""
               sortKey: -1784572433969
@@ -562,7 +644,7 @@ collection:
             meta:
               id: req_545c0121c8ab4f23beb5028cd0df2bc0
               created: 1784489880043
-              modified: 1785789862526
+              modified: 1786823000334
               isPrivate: false
               description: ""
               sortKey: -1784572433769
@@ -594,7 +676,7 @@ collection:
             meta:
               id: req_2b6e0f196de24f5b8563987dbd0abbe4
               created: 1784140259141
-              modified: 1785789739157
+              modified: 1786823378426
               isPrivate: false
               description: ""
               sortKey: -1784664287514
@@ -618,7 +700,7 @@ collection:
             meta:
               id: req_067e25bd6b884013b79ab32982e70cd8
               created: 1784140259708
-              modified: 1785789746719
+              modified: 1786823482860
               isPrivate: false
               description: ""
               sortKey: -1784664287414
@@ -674,7 +756,7 @@ collection:
             meta:
               id: req_ed864014f07a4078b8506cc57041e8a1
               created: 1784140251690
-              modified: 1785789626104
+              modified: 1786823318368
               isPrivate: false
               description: ""
               sortKey: -1784664294415
@@ -698,7 +780,7 @@ collection:
             meta:
               id: req_0b199b5f9a634cd68240ba02da9f10d4
               created: 1784140257978
-              modified: 1785789665517
+              modified: 1786823472911
               isPrivate: false
               description: ""
               sortKey: -1784664294315
@@ -818,7 +900,7 @@ collection:
             meta:
               id: req_ecfe9b6faec04671b2eca07216cde637
               created: 1781465521520
-              modified: 1785789572476
+              modified: 1787350193504
               isPrivate: false
               description: ""
               sortKey: -1785756490884
@@ -842,22 +924,32 @@ collection:
                   value: ""
                   description: ""
                   disabled: false
-                  fileName: C:\Users\conta\Pictures\Screenshots\Captura de tela 2025-11-10
-                    183556.png
+                  fileName: C:\Users\conta\Downloads\WhatsApp Image 2026-08-20 at 10.55.01.jpeg
                   type: file
                 - name: capa
                   value: ""
                   description: ""
                   disabled: false
-                  fileName: C:\Users\conta\Downloads\algarismo_2_numeral_125mm_ouro_escovado_200_2_1570509052_f1ba_600x600.jpg
+                  fileName: C:\Users\conta\Downloads\WhatsApp Image 2026-08-20 at 10.55.01.jpeg
                   type: file
                 - name: imagens
                   value: ""
                   description: ""
                   disabled: false
-                  fileName: C:\Users\conta\Pictures\Screenshots\Captura de tela 2025-11-10
-                    183813.png
+                  fileName: C:\Users\conta\Downloads\WhatsApp Image 2026-08-20 at 10.55.01.jpeg
                   type: file
+                - name: visibilidade
+                  value: privado
+                  description: ""
+                  disabled: false
+                - name: permissao_comentarios
+                  value: NINGUEM
+                  description: ""
+                  disabled: false
+                - name: colaboradores
+                  value: "[4]"
+                  description: ""
+                  disabled: false
             headers:
               - name: Content-Type
                 value: multipart/form-data
@@ -883,7 +975,7 @@ collection:
             meta:
               id: req_51601ab50901423d98c0e14bcd96590a
               created: 1781466609188
-              modified: 1785789894339
+              modified: 1786822873095
               isPrivate: false
               description: ""
               sortKey: -1785756490984
@@ -898,6 +990,96 @@ collection:
                   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvdGF2aW8yQGdtYWlsLmNvbSIsInRpcG9fdXN1YXJpbyI6IlBGIiwiaWF0IjoxNzg1NDQzODk4LCJleHAiOjE3ODYwNDg2OTh9.1AlAyuOB5dkS8fPbXFJlIdVLH-mTlq0tFw-P6HeGpsg
                 description: ""
                 disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts
+            name: Lista todos os posts do site
+            meta:
+              id: req_f34e2e19c8dc4e75a2de594e09caad04
+              created: 1786822577158
+              modified: 1787142716707
+              isPrivate: false
+              description: ""
+              sortKey: -1786822577158
+            method: GET
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts/categoria/1
+            name: buscar posts por categoria
+            meta:
+              id: req_8bb602279e504e2bb87ad33a6cbef1e5
+              created: 1787138642529
+              modified: 1787145991687
+              isPrivate: false
+              description: ""
+              sortKey: -1787138642529
+            method: GET
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts/usuario/1
+            name: Lista os posts de um usuario especifico
+            meta:
+              id: req_1063aa9a249743aa8e897f6ac576b68b
+              created: 1787145976073
+              modified: 1787146270769
+              isPrivate: false
+              description: ""
+              sortKey: -1787145976073
+            method: GET
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/posts/3
+            name: Exclui um post do usuario autenticado
+            meta:
+              id: req_cbe17cc5dfb840d0832821a45834dad3
+              created: 1787146049892
+              modified: 1787147244246
+              isPrivate: false
+              description: ""
+              sortKey: -1787146049892
+            method: DELETE
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/usuarios/1
+            name: Carrega a página pública de um usuário
+            meta:
+              id: req_20a22f0e265d4e4399090f83058bb560
+              created: 1787147133491
+              modified: 1787147286684
+              isPrivate: false
+              description: ""
+              sortKey: -1787147133491
+            method: GET
             settings:
               renderRequestBody: true
               encodeUrl: true
@@ -1026,12 +1208,91 @@ collection:
                 send: true
                 store: true
               rebuildPath: true
+      - name: Categorias
+        meta:
+          id: fld_1362b02571ff472cb7cb2c02fe9cd9b5
+          created: 1787137074659
+          modified: 1787137074659
+          sortKey: -1787137074659
+          description: ""
+        children:
+          - url: http://localhost:4500/categorias/populares
+            name: lista as categorias mais usadas
+            meta:
+              id: req_944ba4a0c461431ab6f4430a29e3692f
+              created: 1787137077227
+              modified: 1787138639189
+              isPrivate: false
+              description: ""
+              sortKey: -1787137077227
+            method: GET
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Pesquisa
+        meta:
+          id: fld_b4464ea8f67844d7aeb3e502ad8a18a3
+          created: 1787347793773
+          modified: 1787347793773
+          sortKey: -1787347793773
+          description: ""
+        children:
+          - url: http://localhost:4500/usuarios/historico-pesquisas
+            name: Retorna as últimas 5 pesquisas do usuário autenticado
+            meta:
+              id: req_0e8470e88eaa466590d62ac707ed9851
+              created: 1787172997799
+              modified: 1787348043170
+              isPrivate: false
+              description: ""
+              sortKey: -1787347797144
+            method: GET
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:4500/usuarios/historico-pesquisas/5
+            name: Exclui uma pesquisa do histórico do usuário autenticado
+            meta:
+              id: req_e6624ed05e134746b73b9bd3c122e311
+              created: 1787347802120
+              modified: 1787348280919
+              isPrivate: false
+              description: ""
+              sortKey: -1787347802120
+            method: DELETE
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
 cookieJar:
   name: Default Jar
   meta:
     id: jar_8a236989a14e4182ae145feaac27964f
     created: 1763412840212
-    modified: 1763412840212
+    modified: 1787146158503
+  cookies:
+    - id: 1718b76c-6452-4610-8f78-33f2d1f40887
+      key: token
+      value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJvdGF2aW9AZ21haWwuY29tIiwidGlwb191c3VhcmlvIjoiUEYiLCJpYXQiOjE3ODcxNDYxNTIsImV4cCI6MTc4Nzc1MDk1Mn0.2qd10ZXdzVG42HPiD8lbs07qIr0P2WSp9tlHtE5e7zw
+      domain: localhost
+      path: /
+      secure: false
+      httpOnly: true
+      hostOnly: true
 environments:
   name: Base Environment
   meta:
