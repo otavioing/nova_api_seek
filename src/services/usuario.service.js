@@ -272,6 +272,45 @@ const updatePerfilPessoaFisica = async (
     );
 };
 
+const getPerfis = async (usuarioId) => {
+
+    const usuario = await usuarioRepository.findPerfisByUsuarioId(
+        usuarioId
+    );
+
+    if (!usuario) {
+        throw new AppError(
+            "Usuário não encontrado.",
+            404
+        );
+    }
+
+    return {
+        id: usuario.id,
+        tipo_usuario: usuario.tipo_usuario,
+        perfil_empresa: usuario.perfil_empresa_id === null ? null : {
+            razao_social: usuario.razao_social,
+            nome_fantasia: usuario.nome_fantasia,
+            telefone_comercial: usuario.telefone_comercial,
+            categoria_negocio: usuario.categoria_negocio,
+            numero_funcionarios: usuario.numero_funcionarios,
+            endereco_completo: usuario.endereco_completo,
+            descricao: usuario.descricao,
+            site: usuario.site
+        },
+        perfil_pessoa_fisica: usuario.perfil_pessoa_fisica_id === null ? null : {
+            nome_usuario: usuario.nome_usuario,
+            telefone: usuario.telefone,
+            cidade: usuario.cidade,
+            estado: usuario.estado,
+            sobre: usuario.sobre,
+            linkedin: usuario.linkedin,
+            github: usuario.github,
+            curriculo: usuario.curriculo
+        }
+    };
+};
+
 const pesquisarUsuarios = async (
     termo,
     idUsuarioToken = null,
@@ -354,6 +393,7 @@ module.exports = {
     updateBannerPerfil,
     updatePerfilEmpresa,
     updatePerfilPessoaFisica,
+    getPerfis,
     pesquisarUsuarios,
     getUltimasPesquisas,
     deleteHistoricoPesquisa

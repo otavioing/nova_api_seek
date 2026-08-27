@@ -292,6 +292,29 @@ const atualizarPerfilPessoaFisica = async (
     }
 };
 
+const getPerfis = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        const perfis = await usuarioService.getPerfis(
+            req.user.id
+        );
+
+        return response.success(
+            res,
+            "Informações dos perfis carregadas com sucesso.",
+            perfis
+        );
+
+    } catch (error) {
+        next(error);
+    }
+};
+
 const pesquisarUsuarios = async (
     req,
     res,
@@ -426,6 +449,7 @@ module.exports = {
     uploadBannerPerfil,
     atualizarPerfilEmpresa,
     atualizarPerfilPessoaFisica,
+    getPerfis,
     pesquisarUsuarios,
     getUltimasPesquisas,
     deleteHistoricoPesquisa

@@ -155,6 +155,45 @@ const findPaginaById = async (id) => {
     return rows[0] || null;
 };
 
+const findPerfisByUsuarioId = async (usuarioId) => {
+
+    const [rows] = await db.query(
+        `
+        SELECT
+            u.id,
+            u.tipo_usuario,
+            pe.id AS perfil_empresa_id,
+            pe.razao_social,
+            pe.nome_fantasia,
+            pe.telefone_comercial,
+            pe.categoria_negocio,
+            pe.numero_funcionarios,
+            pe.endereco_completo,
+            pe.descricao,
+            pe.site,
+            ppf.id AS perfil_pessoa_fisica_id,
+            ppf.nome_usuario,
+            ppf.telefone,
+            ppf.cidade,
+            ppf.estado,
+            ppf.sobre,
+            ppf.linkedin,
+            ppf.github,
+            ppf.curriculo
+        FROM usuarios u
+        LEFT JOIN perfis_empresa pe
+            ON pe.usuario_id = u.id
+        LEFT JOIN perfis_pessoa_fisica ppf
+            ON ppf.usuario_id = u.id
+        WHERE u.id = ?
+        LIMIT 1
+        `,
+        [usuarioId]
+    );
+
+    return rows[0] || null;
+};
+
 const updateCadastroCompleto = async (idUsuario) => {
 
     const [result] = await db.query(
@@ -427,6 +466,7 @@ module.exports = {
     findById,
     findCadastroCompleto,
     findPaginaById,
+    findPerfisByUsuarioId,
     updateCadastroCompleto,
     updateFotoPerfil,
     updateBannerPerfil,

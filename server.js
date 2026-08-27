@@ -12,6 +12,7 @@ const seguidoresRoutes = require("./src/routes/seguidores.routes");
 const notificacoesRoutes = require("./src/routes/notificacoes.routes");
 const preferenciasNotificacoes = require("./src/routes/preferenciasNotificacoes.routes");
 const mensagemRoutes = require("./src/routes/mensagens.routes");
+const vagaRoutes = require("./src/routes/vaga.routes");
 
 const errorHandler = require("./src/middlewares/errorHandler");
 
@@ -38,6 +39,7 @@ app.use("/seguidores", seguidoresRoutes);
 app.use("/notificacoes", notificacoesRoutes);
 app.use("/preferencias-notificacoes", preferenciasNotificacoes);
 app.use("/mensagens", mensagemRoutes);
+app.use("/vagas", vagaRoutes);
 
 app.use(errorHandler);
 

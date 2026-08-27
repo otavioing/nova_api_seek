@@ -22,6 +22,8 @@ router.get("/historico-pesquisas", authMiddleware, usuarioController.getUltimasP
 router.delete("/historico-pesquisas/:id", authMiddleware, usuarioValidator.excluirHistoricoPesquisa, usuarioController.deleteHistoricoPesquisa);
 // Pesquisa usuários por nome ou e-mail
 router.get("/pesquisar", usuarioValidator.pesquisar, usuarioController.pesquisarUsuarios);
+// Retorna as informações dos perfis do usuário autenticado
+router.get("/perfil", authMiddleware, usuarioController.getPerfis);
 // Carrega a página pública de um usuário
 router.get("/:id", usuarioController.getPaginaUsuario);
 // Atualiza a foto de perfil do usuário logado

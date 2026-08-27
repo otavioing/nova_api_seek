@@ -27,6 +27,8 @@ SET time_zone = "+00:00";
 -- Estrutura para tabela `categorias_posts`
 --
 
+DROP TABLE IF EXISTS `categorias_posts`;
+
 CREATE TABLE `categorias_posts` (
   `id` int(10) UNSIGNED NOT NULL,
   `nome` varchar(100) NOT NULL
@@ -591,6 +593,7 @@ CREATE TABLE `vagas_favoritas` (
 --
 -- Índices de tabela `categorias_posts`
 --
+
 ALTER TABLE `categorias_posts`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uq_categorias_posts_nome` (`nome`);
