@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 const usuarioController = require("../controllers/usuario.controller");
 const usuarioValidator = require("../validators/usuario.validator");
-const {uploadPerfil,uploadBanner} = require("../middlewares/upload.middleware");
+const {
+    uploadPerfil,
+    uploadBanner,
+    uploadCurriculo
+} = require("../middlewares/upload.middleware");
 const authMiddleware = require("../middlewares/auth.middleware");
 
 
@@ -33,6 +37,11 @@ router.put("/banner-perfil",authMiddleware,uploadBanner.single("banner"),usuario
 // Atualiza todas as informações do perfil empresarial do usuário logado
 router.put("/perfil-empresa",authMiddleware,usuarioController.atualizarPerfilEmpresa);
 // Atualiza todas as informações do perfil de pessoa física do usuário logado
-router.put("/perfil-pessoa-fisica",authMiddleware,usuarioController.atualizarPerfilPessoaFisica);
+router.put(
+    "/perfil-pessoa-fisica",
+    authMiddleware,
+    uploadCurriculo.single("curriculo"),
+    usuarioController.atualizarPerfilPessoaFisica
+);
 
 module.exports = router;

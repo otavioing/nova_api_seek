@@ -277,14 +277,26 @@ const atualizarPerfilPessoaFisica = async (
 
     try {
 
+        const dados = {
+            ...req.body,
+            curriculo: req.file
+                ? `/uploads/curriculo/${req.file.filename}`
+                : req.body.curriculo ?? null
+        };
+
         await usuarioService.updatePerfilPessoaFisica(
             req.user.id,
-            req.body
+            dados
         );
 
         return response.success(
             res,
-            "Perfil de pessoa física atualizado com sucesso."
+            "Perfil de pessoa física atualizado com sucesso.",
+            {
+                curriculo: dados.curriculo
+                    ? montarUrlArquivo(req, dados.curriculo)
+                    : null
+            }
         );
 
     } catch (error) {

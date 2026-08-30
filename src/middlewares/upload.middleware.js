@@ -49,6 +49,23 @@ const fileFilter = (req, file, cb) => {
     cb(new Error("Formato de imagem inválido."));
 };
 
+const fileFilterPdf = (req, file, cb) => {
+
+    const extensao = path.extname(file.originalname).toLowerCase();
+    const tiposPermitidos = [
+        "application/pdf"
+    ];
+
+    if (
+        tiposPermitidos.includes(file.mimetype) ||
+        extensao === ".pdf"
+    ) {
+        return cb(null, true);
+    }
+
+    cb(new Error("Formato de PDF inválido."));
+};
+
 const uploadPerfil = multer({
     storage: criarStorage("perfil"),
     fileFilter
@@ -59,7 +76,13 @@ const uploadBanner = multer({
     fileFilter
 });
 
+const uploadCurriculo = multer({
+    storage: criarStorage("curriculo"),
+    fileFilter: fileFilterPdf
+});
+
 module.exports = {
     uploadPerfil,
-    uploadBanner
+    uploadBanner,
+    uploadCurriculo
 };
