@@ -619,7 +619,7 @@ const findDonoEStatusById = async (postId) => {
         `
         SELECT
             id,
-            id_usuario,
+            id_usuario AS usuario_id,
             status
         FROM posts
         WHERE id = ?

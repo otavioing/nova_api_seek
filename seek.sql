@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26/08/2026 às 02:22
+-- Tempo de geração: 16/09/2026 às 15:37
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -26,8 +26,6 @@ SET time_zone = "+00:00";
 --
 -- Estrutura para tabela `categorias_posts`
 --
-
-DROP TABLE IF EXISTS `categorias_posts`;
 
 CREATE TABLE `categorias_posts` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -57,6 +55,17 @@ CREATE TABLE `categorias_vagas` (
   `id` int(10) UNSIGNED NOT NULL,
   `nome` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `categorias_vagas`
+--
+
+INSERT INTO `categorias_vagas` (`id`, `nome`) VALUES
+(2, 'Dados'),
+(4, 'Engenharia'),
+(5, 'Recursos Humanos'),
+(3, 'Suporte'),
+(1, 'ti');
 
 -- --------------------------------------------------------
 
@@ -148,6 +157,13 @@ CREATE TABLE `historico_pesquisas` (
   `data_pesquisa` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `historico_pesquisas`
+--
+
+INSERT INTO `historico_pesquisas` (`id`, `id_usuario`, `termo_pesquisa`, `data_pesquisa`) VALUES
+(9, 1, 'otav', '2026-09-02 12:45:57');
+
 -- --------------------------------------------------------
 
 --
@@ -160,6 +176,13 @@ CREATE TABLE `likes_posts` (
   `id_post` int(10) UNSIGNED NOT NULL,
   `data_curtida` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `likes_posts`
+--
+
+INSERT INTO `likes_posts` (`id`, `id_usuario`, `id_post`, `data_curtida`) VALUES
+(4, 10, 4, '2026-09-02 12:43:38');
 
 -- --------------------------------------------------------
 
@@ -231,7 +254,8 @@ CREATE TABLE `perfis_empresa` (
 --
 
 INSERT INTO `perfis_empresa` (`id`, `usuario_id`, `razao_social`, `nome_fantasia`, `telefone_comercial`, `categoria_negocio`, `numero_funcionarios`, `endereco_completo`, `descricao`, `site`, `data_atualizacao`) VALUES
-(1, 4, 'Empresa LTDA', 'Empresa', '11999999999', 'Tecnologia', 10, 'Rua A, 100', 'Descrição da empresa', 'https://empresa.com', '2026-08-22 14:10:20');
+(1, 4, 'Empresa LTDA', 'Empresa', '11999999999', 'Tecnologia', 10, 'Rua A, 100', 'Descrição da empresa', 'https://empresa.com', '2026-08-22 14:10:20'),
+(2, 1, 'tes', 'tes', 'tes', 'tes', 234, NULL, 'tes', 'tes', '2026-08-30 17:40:44');
 
 -- --------------------------------------------------------
 
@@ -258,8 +282,7 @@ CREATE TABLE `perfis_pessoa_fisica` (
 --
 
 INSERT INTO `perfis_pessoa_fisica` (`id`, `usuario_id`, `nome_usuario`, `telefone`, `cidade`, `estado`, `sobre`, `linkedin`, `github`, `curriculo`, `data_atualizacao`) VALUES
-(1, 1, 'Nome público', '11999999999', 'São Paulo', 'SP', 'Sobre mim', 'https://linkedin.com/in/usuario', 'https://github.com/usuario', 'https://site.com/curriculo.pdf', '2026-08-22 14:07:16'),
-(2, 7, 'Nome público', '11999999999', 'São Paulo', 'SP', 'Sobre mim', 'https://linkedin.com/in/usuario', 'https://github.com/usuario', 'https://site.com/curriculo.pdf', '2026-08-22 14:09:12');
+(9, 10, 'lfw', NULL, NULL, NULL, 'etrtgyuhi', 'tes', 'tes', '/uploads/curriculo/1788352867053-836140520.pdf', '2026-09-02 12:41:07');
 
 -- --------------------------------------------------------
 
@@ -286,9 +309,9 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`id`, `id_usuario`, `titulo`, `descricao`, `capa`, `data_criacao`, `data_atualizacao`, `status`, `conteudo_18`, `permissao_comentarios`) VALUES
 (1, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', NULL, '2026-06-14 19:43:43', '2026-06-14 19:43:43', 'ATIVO', 0, 'TODOS'),
-(2, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', NULL, '2026-07-15 18:23:19', '2026-07-15 18:23:19', 'ATIVO', 0, 'TODOS'),
+(2, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', NULL, '2026-07-15 18:23:19', '2026-09-02 13:59:10', 'EXCLUIDO', 0, 'TODOS'),
 (3, 2, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1784139819816-589080689.jpg', '2026-07-15 18:23:39', '2026-08-19 13:47:15', 'ATIVO', 0, 'TODOS'),
-(4, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1787348649562-143968288.jpeg', '2026-08-21 21:44:09', '2026-08-21 21:44:09', 'ATIVO', 0, 'TODOS'),
+(4, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1787348649562-143968288.jpeg', '2026-08-21 21:44:09', '2026-09-02 13:20:19', 'EXCLUIDO', 0, 'TODOS'),
 (5, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1787349002122-248895620.jpeg', '2026-08-21 21:50:02', '2026-08-21 21:50:02', 'OCULTO', 0, 'TODOS'),
 (6, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1787349504278-701911721.jpeg', '2026-08-21 21:58:24', '2026-08-21 21:58:24', 'OCULTO', 0, 'TODOS'),
 (7, 1, 'Titulo primeiro post da api nova ', 'Descrição primeiro post da api nova ', '/uploads/posts/1787349548498-18203386.jpeg', '2026-08-21 21:59:08', '2026-08-21 21:59:08', 'OCULTO', 0, 'TODOS'),
@@ -297,7 +320,7 @@ INSERT INTO `posts` (`id`, `id_usuario`, `titulo`, `descricao`, `capa`, `data_cr
 (10, 1, 'bnjk', 'jkl', '/uploads/posts/1787351442961-346056577.jpg', '2026-08-21 22:30:42', '2026-08-21 22:30:42', 'OCULTO', 0, 'SEGUIDORES'),
 (11, 1, 'eq2eq', 'eqqe', '/uploads/posts/1787351626311-378631509.jpg', '2026-08-21 22:33:46', '2026-08-21 22:33:46', 'OCULTO', 0, 'SEGUIDORES'),
 (12, 1, 'eq2eq', 'eqqe', '/uploads/posts/1787351662535-342303787.jpg', '2026-08-21 22:34:22', '2026-08-21 22:34:22', 'OCULTO', 0, 'SEGUIDORES'),
-(13, 1, 'bn,', 'ghjk', '/uploads/posts/1787352166139-403933220.jpg', '2026-08-21 22:42:46', '2026-08-21 22:43:41', 'ATIVO', 0, 'SEGUIDORES');
+(13, 1, 'bn,', 'ghjk', '/uploads/posts/1787352166139-403933220.jpg', '2026-08-21 22:42:46', '2026-09-02 13:19:56', 'EXCLUIDO', 0, 'SEGUIDORES');
 
 -- --------------------------------------------------------
 
@@ -518,13 +541,14 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `tipo_usuario`, `nome`, `email`, `senha`, `conta_verificada`, `codigo_verificacao`, `expiracao_codigo`, `banido`, `foto_perfil`, `banner_perfil`, `cnpj`, `data_criacao`, `cadastro_completo`) VALUES
-(1, 'PF', 'Otávio Domingues', 'otavio@gmail.com', '$2b$10$jwO5Au26ZAqA.7K9rdYQkew3wSSGCD4C/wc3OISBwjJtE8AcI9WOO', 1, NULL, NULL, 0, '/uploads/perfil/1787407017155-848918929.png', '/uploads/banner/1787407013724-978912022.png', NULL, '2026-06-13 19:13:04', 1),
+(1, 'PF', 'Otávio Domingues', 'otavio@gmail.com', '$2b$10$jwO5Au26ZAqA.7K9rdYQkew3wSSGCD4C/wc3OISBwjJtE8AcI9WOO', 1, NULL, NULL, 0, '/uploads/perfil/1788111644218-931844665.jpeg', '/uploads/banner/1787407013724-978912022.png', NULL, '2026-06-13 19:13:04', 1),
 (2, 'PF', 'Otávio Domingues 2', 'otavio2@gmail.com', '$2b$10$S.p7JiTlahu910fQWgjX0O1OZ8Zf8zDKsnDPy/vpDnC.PdYBnLQVe', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-07-20 17:56:51', 0),
 (3, 'PF', 'Otávio Domingues 2', 'otaviodominguessilva@gmail.com', '$2b$10$.B4GFcIgqFJkt8YsHO/vweSO8qVMbow1ssjq5W1L6lH1kFon.kME6', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-07-30 21:18:50', 0),
-(4, 'EMPRESA', 'Otávio Domingues 2', 'tectonicroom356@gmail.com', '$2b$10$jwO5Au26ZAqA.7K9rdYQkew3wSSGCD4C/wc3OISBwjJtE8AcI9WOO', 1, NULL, NULL, 0, NULL, NULL, '123456', '2026-08-15 13:19:37', 0),
+(4, 'EMPRESA', 'Otávio Domingues 2', 'tectonicroom356@gmail.com', '$2b$10$jwO5Au26ZAqA.7K9rdYQkew3wSSGCD4C/wc3OISBwjJtE8AcI9WOO', 1, NULL, NULL, 0, NULL, NULL, '123456', '2026-08-15 13:19:37', 1),
 (5, 'PF', 'teste criação front', 'fortnite909099@gmail.com', '$2b$10$5MHP3LlZNk3QLhmvhg7LOexQwrFjkX5jNHgDDZ/Lj1wYdg.EFyTHe', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-08-15 13:29:15', 0),
 (6, 'PF', 'caca', 'gustavodomingues21406@gmail.com', '$2b$10$5m9wFoDTd20ON3l1fdLiluWbEpqMzwO72/SSpbkRonNkHoOoDlsm6', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-08-15 13:39:54', 0),
-(7, 'PF', 'wdaesfdg', 'otaviodominguessilvagemas@gmail.com', '$2b$10$jwO5Au26ZAqA.7K9rdYQkew3wSSGCD4C/wc3OISBwjJtE8AcI9WOO', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-08-15 13:44:19', 0);
+(7, 'PF', 'wdaesfdg', 'otaviodominguessilvagemas@gmail.com', '$2b$10$jwO5Au26ZAqA.7K9rdYQkew3wSSGCD4C/wc3OISBwjJtE8AcI9WOO', 1, NULL, NULL, 0, NULL, NULL, NULL, '2026-08-15 13:44:19', 0),
+(10, 'PF', 'lfy', 'joaojfpessoal@gmail.com', '$2b$10$Dv9MkkwDgPsoyb6Zy643VOdtLSMe3Hn6UWhXxSFqw1VTS9X5BN2ni', 1, NULL, NULL, 0, '/uploads/perfil/1788352867074-606813839.png', NULL, NULL, '2026-09-02 12:39:41', 1);
 
 -- --------------------------------------------------------
 
@@ -542,6 +566,22 @@ CREATE TABLE `vagas` (
   `data_atualizacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` enum('ABERTA','FECHADA','PAUSADA') NOT NULL DEFAULT 'ABERTA'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `vagas`
+--
+
+INSERT INTO `vagas` (`id`, `id_empresa`, `titulo`, `descricao`, `link_linkedin`, `data_criacao`, `data_atualizacao`, `status`) VALUES
+(1, 4, 'Alliage S/A. hiring Estagiário Software - P&amp;amp;D in Ribeirão Preto, São Paulo, Brazil | LinkedIn', 'Posted 12:00:00 AM. Responsabilidades:Desenvolvimento de software ( C, C++, C#, Java, Python);Desenvolvimento de…See this and similar jobs on LinkedIn.', 'https://www.linkedin.com/jobs/view/4240706024/', '2026-08-26 13:52:19', '2026-08-26 13:52:19', 'ABERTA'),
+(2, 4, 'Alliage S/A. hiring Estagiário Software - P&amp;amp;D in Ribeirão Preto, São Paulo, Brazil | LinkedIn', 'Posted 12:00:00 AM. Responsabilidades:Desenvolvimento de software ( C, C++, C#, Java, Python);Desenvolvimento de…See this and similar jobs on LinkedIn.', 'https://www.linkedin.com/jobs/view/4240706024/', '2026-08-26 13:52:49', '2026-08-26 13:52:49', 'ABERTA'),
+(3, 4, 'Estagiário Software - P&amp;amp;D at Alliage S/A. — Ribeirão Preto, São Paulo, Brazil | LinkedIn Jobs', 'Apply for Estagiário Software - P&amp;amp;D at Alliage S/A. in Ribeirão Preto, São Paulo, Brazil. Full-time Internship role. See responsibilities, qualifications, and similar jobs on LinkedIn.', 'https://www.linkedin.com/jobs/view/4240706024/', '2026-08-26 13:53:37', '2026-08-26 13:53:37', 'ABERTA'),
+(4, 4, 'teste', 'teste', 'https://www.linkedin.com/jobs/view/4240706024/', '2026-08-27 11:41:39', '2026-08-27 11:41:39', 'ABERTA'),
+(5, 4, 'teste', 'teste', 'https://www.linkedin.com/jobs/view/424070604/', '2026-08-27 11:43:52', '2026-08-27 11:43:52', 'ABERTA'),
+(6, 4, 'teste', 'teste', 'https://www.linkein.com/jobs/view/424070604/', '2026-08-27 11:44:04', '2026-08-27 11:44:04', 'ABERTA'),
+(7, 4, 'teste', 'teste', 'https://www.linkein.com/obs/viw/424070604/', '2026-08-27 11:44:20', '2026-08-27 11:44:20', 'ABERTA'),
+(8, 4, 'Alliage S/A. hiring Estagiário Software - P&amp;amp;D in Ribeirão Preto, São Paulo, Brazil | LinkedIn', 'Posted 12:00:00 AM. Responsabilidades:Desenvolvimento de software ( C, C++, C#, Java, Python);Desenvolvimento de…See this and similar jobs on LinkedIn.', 'https://www.linkedin.com/jobs/view/4240706024/', '2026-08-27 11:54:43', '2026-08-27 11:54:43', 'ABERTA'),
+(9, 4, 'srdtfgh', 'wesrdtfygu', 'https://www.linkedin.com/jobs/viw/4240706024/', '2026-08-27 11:55:25', '2026-08-27 11:55:25', 'ABERTA'),
+(10, 4, 'Alliage S/A. hiring Estagiário Software - P&amp;amp;D in Ribeirão Preto, São Paulo, Brazil | LinkedIn', 'Posted 12:00:00 AM. Responsabilidades:Desenvolvimento de software ( C, C++, C#, Java, Python);Desenvolvimento de…See this and similar jobs on LinkedIn.', 'https://www.linkedin.com/jobs/view/4240706024/', '2026-08-27 12:18:58', '2026-08-27 12:18:58', 'ABERTA');
 
 --
 -- Acionadores `vagas`
@@ -573,6 +613,25 @@ CREATE TABLE `vagas_categorias_rel` (
   `id_categoria` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `vagas_categorias_rel`
+--
+
+INSERT INTO `vagas_categorias_rel` (`id_vaga`, `id_categoria`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(7, 1),
+(8, 2),
+(8, 3),
+(9, 2),
+(9, 3),
+(10, 4),
+(10, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -593,7 +652,6 @@ CREATE TABLE `vagas_favoritas` (
 --
 -- Índices de tabela `categorias_posts`
 --
-
 ALTER TABLE `categorias_posts`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uq_categorias_posts_nome` (`nome`);
@@ -794,7 +852,7 @@ ALTER TABLE `categorias_posts`
 -- AUTO_INCREMENT de tabela `categorias_vagas`
 --
 ALTER TABLE `categorias_vagas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `comentarios`
@@ -824,13 +882,13 @@ ALTER TABLE `denuncias`
 -- AUTO_INCREMENT de tabela `historico_pesquisas`
 --
 ALTER TABLE `historico_pesquisas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `likes_posts`
 --
 ALTER TABLE `likes_posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `mensagens`
@@ -848,13 +906,13 @@ ALTER TABLE `notificacoes`
 -- AUTO_INCREMENT de tabela `perfis_empresa`
 --
 ALTER TABLE `perfis_empresa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `perfis_pessoa_fisica`
 --
 ALTER TABLE `perfis_pessoa_fisica`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `posts`
@@ -902,19 +960,19 @@ ALTER TABLE `seguidores`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `vagas`
 --
 ALTER TABLE `vagas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `vagas_favoritas`
 --
 ALTER TABLE `vagas_favoritas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restrições para tabelas despejadas
