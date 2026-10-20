@@ -40,9 +40,10 @@ const findMaisUsadas = async () => {
         SELECT 
             cp.id, 
             cp.nome, 
-            COUNT(pcr.id_post) AS total_usos
+            COUNT(p.id) AS total_usos
         FROM categorias_posts cp
         LEFT JOIN posts_categorias_rel pcr ON cp.id = pcr.id_categoria
+        LEFT JOIN posts p ON p.id = pcr.id_post AND p.status = 'ATIVO'
         GROUP BY cp.id, cp.nome
         ORDER BY total_usos DESC
         `

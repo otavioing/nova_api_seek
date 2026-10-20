@@ -36,7 +36,7 @@ router.post("/comentarios/:id/respostas", authMiddleware, postValidator.validarC
 // Lista as respostas de um comentario
 router.get("/comentarios/:id/respostas", authMiddleware, postController.getCommentReplies);
 // Obtem todos os posts
-router.get("/", authMiddleware, postController.getAll);
+router.get("/", postController.getAll);
 // Busca posts por categoria
 router.get("/categoria/:id_categoria", postValidator.listarPorCategoria, postController.listarPorCategoria);
 // Lista os posts de um usuario especifico

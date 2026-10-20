@@ -7,13 +7,13 @@ const vagaValidator = require("../validators/vaga.validator");
 // Cria uma nova vaga 
 router.post("/", authMiddleware, vagaValidator.criar, vagaController.criar);
 // Lista as vagas do banco
-router.get("/", authMiddleware, vagaController.listar);
+router.get("/", vagaController.listar);
 // Filtra vagas por categoria (ID ou nome)
 router.get("/categoria/:categoria", authMiddleware, vagaValidator.categoria, vagaController.listarPorCategoria);
 // Filtra vagas pelo intervalo inclusivo de datas de criação
 router.get("/data", authMiddleware, vagaValidator.data, vagaController.listarPorData);
 // Lista as categorias mais utilizadas nas vagas abertas
-router.get("/mais-utilizados", authMiddleware, vagaValidator.maisUtilizados, vagaController.listarFiltrosMaisUtilizados);
+router.get("/mais-utilizados", vagaValidator.maisUtilizados, vagaController.listarFiltrosMaisUtilizados);
 // lista as vagas favoritas do usuario
 router.get("/favoritas", authMiddleware, vagaController.listarFavoritas);
 // Lista todas as vagas de um usuário específico
